@@ -1,0 +1,57 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
+
+*.iml
+.gradle
+/MakeFriendAndroid/local.properties
+/MakeFriendAndroid/.idea/caches
+/MakeFriendAndroid/.idea/libraries
+/MakeFriendAndroid/.idea/modules.xml
+/MakeFriendAndroid/.idea/workspace.xml
+/MakeFriendAndroid/.idea/navEditor.xml
+/MakeFriendAndroid/.idea/assetWizardSettings.xml
+/MakeFriendAndroid/.DS_Store
+/MakeFriendAndroid/build
+/MakeFriendAndroid/captures
+.externalNativeBuild
+.cxx
+
+
+### STS ###
+makefriendback/.apt_generated
+makefriendback/.classpath
+makefriendback/.factorypath
+makefriendback/.project
+makefriendback/.settings
+makefriendback/.springBeans
+makefriendback/.sts4-cache
+
