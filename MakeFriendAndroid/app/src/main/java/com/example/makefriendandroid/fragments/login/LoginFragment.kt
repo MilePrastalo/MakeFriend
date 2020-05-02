@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.makefriendandroid.R
+import kotlinx.android.synthetic.main.login_fragment.*
 
 class LoginFragment : Fragment() {
 
@@ -21,6 +22,9 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        login_button.setOnClickListener {
+            login()
+        }
         return inflater.inflate(R.layout.login_fragment, container, false)
     }
 
@@ -28,6 +32,12 @@ class LoginFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
         // TODO: Use the ViewModel
+    }
+
+    private fun login() {
+        val username = user_name_edit_text.text.toString()
+        val password = password_edit_text.text.toString()
+        viewModel.login(username, password)
     }
 
 }
