@@ -74,4 +74,8 @@ public class UserService implements UserDetailsService {
         user.setInterests(interests);
         return userRepository.save(user);
     }
+
+    public List<User> findFriends(Long userId) {
+        return userRepository.findFriendsById(userId);
+    }
 }

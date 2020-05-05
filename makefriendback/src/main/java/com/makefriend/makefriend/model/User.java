@@ -37,6 +37,15 @@ public class User implements UserDetails {
     @OneToMany
     private Set<Trait> traits;
 
+    @ManyToMany
+    private Set<User> friends;
+
+    @OneToMany(mappedBy = "sender")
+    private Set<FriendRequest> sentFriendRequests;
+
+    @OneToMany(mappedBy = "receiver")
+    private Set<FriendRequest> receivedFriendRequests;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Authority> authorities;
 
@@ -58,6 +67,7 @@ public class User implements UserDetails {
         this.authorities = authorities;
         this.traits = new HashSet<>();
         this.interests = new HashSet<>();
+        this.friends = new HashSet<>();
     }
 
     @Override
@@ -141,5 +151,13 @@ public class User implements UserDetails {
 
     public void setTraits(Set<Trait> traits) {
         this.traits = traits;
+    }
+
+    public Set<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(Set<User> friends) {
+        this.friends = friends;
     }
 }
