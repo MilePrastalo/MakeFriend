@@ -78,4 +78,8 @@ public class UserService implements UserDetailsService {
     public List<User> findFriends(Long userId) {
         return userRepository.findFriendsById(userId);
     }
+
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 }
