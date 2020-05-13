@@ -1,0 +1,208 @@
+package com.makefriend.drools
+
+import com.makefriend.makefriend.model.FriendMatch
+rule "User A likes sport"
+    when
+        $fm: FriendMatch(userAInterests contains "Football" || userAInterests contains "Basketball" || userAInterests contains "Volleyball")
+    then
+        $fm.likeCategory(1,"SPORT");
+        update($fm)
+end
+
+rule "User B likes sport"
+    when
+        $fm: FriendMatch(userBInterests contains "Football" || userBInterests contains "Basketball" || userBInterests contains "Volleyball")
+    then
+        $fm.likeCategory(2,"SPORT");
+        update($fm)
+end
+
+rule "User A and User B like sport"
+lock-on-active true
+    when
+        $fm: FriendMatch(getCategoryValue(1,"SPORT") && getCategoryValue(2,"SPORT"))
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "User A and User B like football"
+lock-on-active true
+    when
+        $fm: FriendMatch()
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "User A and User B like basketball"
+lock-on-active true
+    when
+        $fm: FriendMatch(userAInterests contains "Basketball" && userBInterests contains "Basketball")
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "User A and User B like volleyball"
+lock-on-active true
+    when
+        $fm: FriendMatch(userAInterests contains "Volleyball" && userBInterests contains "Volleyball")
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "User A likes tv and movies"
+    when
+        $fm: FriendMatch(userAInterests contains "TV Shows" || userAInterests contains "Movies")
+    then
+        $fm.likeCategory(1, "TVMOVIE");
+        update($fm)
+end
+
+rule "User B likes tv and movies"
+    when
+        $fm: FriendMatch(userBInterests contains "TV Shows" || userBInterests contains "Movies")
+    then
+        $fm.likeCategory(2, "TVMOVIE");
+        update($fm);
+end
+
+rule "User A and User B like tv and movies"
+lock-on-active true
+    when
+        $fm: FriendMatch(getCategoryValue(1,"TVMOVIE") && getCategoryValue(2, "TVMOVIE"))
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "User A and User B like tv-shows"
+lock-on-active true
+    when
+        $fm: FriendMatch(getUserAInterests() contains "TV SHOWS" && getUserBInterests() contains "TV SHOWS")
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "User A and User B like movies"
+lock-on-active true
+    when
+        $fm:FriendMatch(getUserAInterests() contains "Movies" && getUserBInterests() contains "Movies")
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "User A likes books"
+    when
+    $fm:FriendMatch(getUserAInterests() contains "FantasyBooks" || getUserAInterests() contains "DramaBooks" || getUserAInterests() contains "PoetryBooks" || getUserAInterests() contains "DetectiveBooks" || getUserAInterests() contains "HistoryBooks")
+    then
+        $fm.likeCategory(1,"BOOKS");
+        update($fm)
+end
+
+rule "User B likes books"
+    when
+        $fm:FriendMatch(getUserBInterests() contains "FantasyBooks" || getUserBInterests() contains "DramaBooks" || getUserBInterests() contains "PoetryBooks" || getUserBInterests() contains "DetectiveBooks" || getUserBInterests() contains "HistoryBooks")
+    then
+        $fm.likeCategory(2,"BOOKS");
+        update($fm)
+end
+
+rule "Users A and B like books"
+lock-on-active true
+    when
+        $fm:FriendMatch(getCategoryValue(1,"BOOKS") && getCategoryValue(2, "BOOKS"))
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "Users A and B like fantasy books"
+lock-on-active true
+    when
+        $fm:FriendMatch(getUserAInterests() contains "FantasyBooks" && getUserBInterests() contains "FantasyBooks")
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "Users A and B like drama books"
+lock-on-active true
+    when
+        $fm:FriendMatch(getUserAInterests() contains "DramaBooks" && getUserBInterests() contains "DramaBooks")
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "Users A and B like poetry books"
+lock-on-active true
+    when
+        $fm:FriendMatch(getUserAInterests() contains "PoetryBooks" && getUserBInterests() contains "PoetryBooks")
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "Users A and B like detective books"
+lock-on-active true
+    when
+        $fm:FriendMatch(getUserAInterests() contains "DetectiveBooks" && getUserBInterests() contains "DetectiveBooks")
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "Users A and B like history books"
+lock-on-active true
+    when
+        $fm:FriendMatch(getUserAInterests() contains "HistoryBooks" && getUserBInterests() contains "HistoryBooks")
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "User A likes music"
+    when
+        $fm:FriendMatch(getUserAInterests() contains "Hip-hop" || getUserAInterests() contains "Rock" || getUserAInterests() contains "Metal" || getUserAInterests() contains "Pop")
+    then
+        $fm.likeCategory(1,"MUSIC");
+end
+
+rule "User B likes music"
+    when
+        $fm:FriendMatch(getUserBInterests() contains "Hip-hop" || getUserBInterests() contains "Rock" || getUserBInterests() contains "Metal" || getUserBInterests() contains "Pop")
+    then
+        $fm.likeCategory(2,"MUSIC");
+end
+
+rule "Users A  and B like music"
+    when
+        $fm:FriendMatch(getCategoryValue(1,"MUSIC") && $fm:FriendMatch(getCategoryValue(2,"MUSIC")))
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "Users A  and B like hip-hop"
+lock-on-active true
+    when
+        $fm:FriendMatch(getUserAInterests() contains "Hip-hop" && getUserBInterests() contains "Hip-hop")
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "Users A  and B like rock"
+lock-on-active true
+    when
+    $fm:FriendMatch(getUserAInterests() contains "Rock" && getUserBInterests() contains "Rock")
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "Users A  and B like metal"
+lock-on-active true
+    when
+    $fm:FriendMatch(getUserAInterests() contains "Metal" && getUserBInterests() contains "Metal")
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+
+rule "Users A  and B like pop"
+lock-on-active true
+    when
+    $fm:FriendMatch(getUserAInterests() contains "Pop" && getUserBInterests() contains "Pop")
+    then
+        $fm.setSimilar($fm.getSimilar()+1);
+end
+

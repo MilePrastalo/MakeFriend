@@ -37,7 +37,7 @@ public class FriendsController {
         return new ResponseEntity<>(new UsersBasicDTO(basicFriends), HttpStatus.OK);
     }
 
-    @PostMapping("")
+    @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> sendFriendRequest(@RequestBody FriendRequestDTO dto) {
         friendRequestService.sendFriendRequest(dto);
         return new ResponseEntity<>(HttpStatus.OK);

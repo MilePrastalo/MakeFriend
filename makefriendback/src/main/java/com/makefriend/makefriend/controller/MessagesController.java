@@ -41,7 +41,7 @@ public class MessagesController {
         return new ResponseEntity<>(new MessagesDTO(messagesDto), HttpStatus.OK);
     }
 
-    @PostMapping("")
+    @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MessageDTO> sendChatMessage(@RequestBody MessageDTO dto) throws ParseException {
         Message m = messageService.sendMessage(dto);
         return new ResponseEntity<>(MessageConverter.toDTO(m), HttpStatus.OK);

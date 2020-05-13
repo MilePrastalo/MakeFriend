@@ -1,0 +1,49 @@
+rule "Same smoking"
+    when
+    then
+end
+
+rule "different smoking"
+    when
+    then
+end
+
+rule "Same alcohol consumption"
+    when
+    then
+end
+
+rule "different alcohol consumption"
+    when
+    then
+end
+
+rule "Same physical activity"
+    when
+    then
+end
+
+rule "different physical activity"
+    when
+    then
+end
+
+rule "Both have university"
+    when
+    then
+end
+
+rule "Both dont have university"
+    when
+    then
+end
+
+rule "Have simillar height"
+    when
+    then
+end
+
+rule "Have different height"
+    when
+    then
+end

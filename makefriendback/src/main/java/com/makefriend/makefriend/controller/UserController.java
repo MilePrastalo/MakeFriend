@@ -31,9 +31,9 @@ public class UserController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PostMapping(value = "{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProfileDetailsDTO> setProfileDetails(@PathVariable("userId") Long userId, @RequestBody ProfileDetailsDTO profileDetailsDTO) {
-        User user = userService.setUserDetails(userId, profileDetailsDTO);
+    @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProfileDetailsDTO> setProfileDetails(@RequestBody ProfileDetailsDTO profileDetailsDTO) {
+        User user = userService.setUserDetails(profileDetailsDTO.getId(), profileDetailsDTO);
         return new ResponseEntity<>(new ProfileDetailsDTO(user), HttpStatus.OK);
     }
 
