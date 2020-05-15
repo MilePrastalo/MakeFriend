@@ -1,49 +1,80 @@
+import com.makefriend.makefriend.model.FriendMatch
 rule "Same smoking"
     when
+        $fm:FriendMatch(haveSameTrait("Smoking"))
     then
+        $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        $fm.setCheckedTraits($fm.getCheckedTraits()+1);
+        update($fm)
 end
 
 rule "different smoking"
     when
+        $fm:FriendMatch(haveSameTrait("Smoking"))
     then
+        $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        $fm.setCheckedTraits($fm.getCheckedTraits()+1);
+        update($fm)
 end
 
 rule "Same alcohol consumption"
     when
+        $fm:FriendMatch(haveSameTrait("Drinks"))
     then
+        $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        $fm.setCheckedTraits($fm.getCheckedTraits()+1);
+        update($fm)
 end
 
 rule "different alcohol consumption"
     when
+        $fm:FriendMatch(haveSameTrait("!Drinks"))
     then
+        $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        $fm.setCheckedTraits($fm.getCheckedTraits()+1);
+        update($fm)
 end
 
 rule "Same physical activity"
     when
+        $fm:FriendMatch(haveSameTrait("Active"))
     then
+        $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        $fm.setCheckedTraits($fm.getCheckedTraits()+1);
+        update($fm)
 end
 
 rule "different physical activity"
     when
+        $fm:FriendMatch(~haveSameTrait("Active"))
     then
+        $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        $fm.setCheckedTraits($fm.getCheckedTraits()+1);
+        update($fm)
 end
 
-rule "Both have university"
+rule "Same university education"
     when
+        $fm:FriendMatch(haveSameTrait("University"))
     then
+        $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        $fm.setCheckedTraits($fm.getCheckedTraits()+1);
+        update($fm)
 end
 
-rule "Both dont have university"
+rule "Different university education"
     when
+        $fm:FriendMatch(!haveSameTrait("University"))
     then
+        $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        $fm.setCheckedTraits($fm.getCheckedTraits()+1);
+        update($fm)
 end
 
-rule "Have simillar height"
+rule "finished evals"
     when
+        $fm:FriendMatch(getCheckedTraits()>=4)
     then
-end
-
-rule "Have different height"
-    when
-    then
+        $fm.setMatchTraits($fm.getSimilarTraits()>0);
+        update($fm);
 end

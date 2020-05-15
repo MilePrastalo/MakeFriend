@@ -132,7 +132,7 @@ end
 rule "Users A and B like poetry books"
 lock-on-active true
     when
-        $fm:FriendMatch(getUserAInterests() contains "PoetryBooks" && getUserBInterests() contains "PoetryBooks")
+        $fm:FriendMatch(isMatchTraits() && getUserAInterests() contains "PoetryBooks" && getUserBInterests() contains "PoetryBooks")
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end
@@ -140,7 +140,7 @@ end
 rule "Users A and B like detective books"
 lock-on-active true
     when
-        $fm:FriendMatch(getUserAInterests() contains "DetectiveBooks" && getUserBInterests() contains "DetectiveBooks")
+        $fm:FriendMatch(isMatchTraits() && getUserAInterests() contains "DetectiveBooks" && getUserBInterests() contains "DetectiveBooks")
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end
@@ -148,28 +148,28 @@ end
 rule "Users A and B like history books"
 lock-on-active true
     when
-        $fm:FriendMatch(getUserAInterests() contains "HistoryBooks" && getUserBInterests() contains "HistoryBooks")
+        $fm:FriendMatch(isMatchTraits() && getUserAInterests() contains "HistoryBooks" && getUserBInterests() contains "HistoryBooks")
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end
 
 rule "User A likes music"
     when
-        $fm:FriendMatch(getUserAInterests() contains "Hip-hop" || getUserAInterests() contains "Rock" || getUserAInterests() contains "Metal" || getUserAInterests() contains "Pop")
+        $fm:FriendMatch(isMatchTraits() && getUserAInterests() contains "Hip-hop" || getUserAInterests() contains "Rock" || getUserAInterests() contains "Metal" || getUserAInterests() contains "Pop")
     then
         $fm.likeCategory(1,"MUSIC");
 end
 
 rule "User B likes music"
     when
-        $fm:FriendMatch(getUserBInterests() contains "Hip-hop" || getUserBInterests() contains "Rock" || getUserBInterests() contains "Metal" || getUserBInterests() contains "Pop")
+        $fm:FriendMatch(isMatchTraits() &&  getUserBInterests() contains "Hip-hop" || getUserBInterests() contains "Rock" || getUserBInterests() contains "Metal" || getUserBInterests() contains "Pop")
     then
         $fm.likeCategory(2,"MUSIC");
 end
 
 rule "Users A  and B like music"
     when
-        $fm:FriendMatch(getCategoryValue(1,"MUSIC") && $fm:FriendMatch(getCategoryValue(2,"MUSIC")))
+        $fm:FriendMatch(isMatchTraits() && getCategoryValue(1,"MUSIC") && $fm:FriendMatch(getCategoryValue(2,"MUSIC")))
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end
@@ -177,7 +177,7 @@ end
 rule "Users A  and B like hip-hop"
 lock-on-active true
     when
-        $fm:FriendMatch(getUserAInterests() contains "Hip-hop" && getUserBInterests() contains "Hip-hop")
+        $fm:FriendMatch(isMatchTraits() && getUserAInterests() contains "Hip-hop" && getUserBInterests() contains "Hip-hop")
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end
@@ -185,7 +185,7 @@ end
 rule "Users A  and B like rock"
 lock-on-active true
     when
-    $fm:FriendMatch(getUserAInterests() contains "Rock" && getUserBInterests() contains "Rock")
+    $fm:FriendMatch(isMatchTraits() && getUserAInterests() contains "Rock" && getUserBInterests() contains "Rock")
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end
@@ -193,7 +193,7 @@ end
 rule "Users A  and B like metal"
 lock-on-active true
     when
-    $fm:FriendMatch(getUserAInterests() contains "Metal" && getUserBInterests() contains "Metal")
+    $fm:FriendMatch(isMatchTraits() && getUserAInterests() contains "Metal" && getUserBInterests() contains "Metal")
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end
@@ -201,7 +201,7 @@ end
 rule "Users A  and B like pop"
 lock-on-active true
     when
-    $fm:FriendMatch(getUserAInterests() contains "Pop" && getUserBInterests() contains "Pop")
+    $fm:FriendMatch(isMatchTraits() && getUserAInterests() contains "Pop" && getUserBInterests() contains "Pop")
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end

@@ -4,12 +4,12 @@ import java.util.List;
 
 public class FriendMatch {
     private List<String> userAInterests;
-    private List<String> userATraits;
+    private List<Trait> userATraits;
 
     private List<CategoryLike> alikesCategories;
 
     private List<String> userBInterests;
-    private List<String> userBTraits;
+    private List<Trait> userBTraits;
 
     private List<CategoryLike> blikesCategories;
 
@@ -17,11 +17,12 @@ public class FriendMatch {
     private int similar;
     private boolean matchTraits;
     private int checkedTraits;
+    private int similarTraits;
 
     public FriendMatch() {
     }
 
-    public FriendMatch(List<String> userAInterests, List<String> userATraits, List<CategoryLike> alikesCategories, List<String> userBInterests, List<String> userBTraits, List<CategoryLike> blikesCategories, int similar, boolean matchTraits, int checkedTraits) {
+    public FriendMatch(List<String> userAInterests, List<Trait> userATraits, List<CategoryLike> alikesCategories, List<String> userBInterests, List<Trait> userBTraits, List<CategoryLike> blikesCategories, int similar, boolean matchTraits, int checkedTraits) {
         this.userAInterests = userAInterests;
         this.userATraits = userATraits;
         this.alikesCategories = alikesCategories;
@@ -41,11 +42,11 @@ public class FriendMatch {
         this.userAInterests = userAInterests;
     }
 
-    public List<String> getUserATraits() {
+    public List<Trait> getUserATraits() {
         return userATraits;
     }
 
-    public void setUserATraits(List<String> userATraits) {
+    public void setUserATraits(List<Trait> userATraits) {
         this.userATraits = userATraits;
     }
 
@@ -65,11 +66,11 @@ public class FriendMatch {
         this.userBInterests = userBInterests;
     }
 
-    public List<String> getUserBTraits() {
+    public List<Trait> getUserBTraits() {
         return userBTraits;
     }
 
-    public void setUserBTraits(List<String> userBTraits) {
+    public void setUserBTraits(List<Trait> userBTraits) {
         this.userBTraits = userBTraits;
     }
 
@@ -117,5 +118,18 @@ public class FriendMatch {
         }else{
             blikesCategories.stream().filter(categoryLike -> categoryLike.getCategoryName().equals(name)).findFirst().get().setLikes(true);
         }
+    }
+    public boolean haveSameTrait(String traitName){
+        boolean valA = userATraits.stream().filter(trait -> trait.getName().equals(traitName)).findFirst().get().getValue();
+        boolean valB = userBTraits.stream().filter(trait -> trait.getName().equals(traitName)).findFirst().get().getValue();
+        return valA == valB;
+    }
+
+    public int getSimilarTraits() {
+        return similarTraits;
+    }
+
+    public void setSimilarTraits(int similarTraits) {
+        this.similarTraits = similarTraits;
     }
 }

@@ -1,0 +1,91 @@
+import com.makefriend.makefriend.model.MessageSuggest
+
+rule "A and B like football"
+    when
+    then
+        "What is your favourite football team?"
+end
+rule "A and B like Volleyball"
+    when
+    then
+        "What is your favourite volleyball team?"
+end
+rule "A and B like Basketball"
+    when
+    then
+        "What is your favourite basketball team?"
+end
+rule "A like sport"
+    when
+    then
+end
+rule "B like sport"
+    when
+    then
+end
+rule "A and B like Sport"
+    when
+    then
+        "What is your favourite sport?"
+        //both like sport
+end
+rule "A like books"
+    when
+    then
+end
+rule "B like books"
+    when
+    then
+end
+rule "A and B like Books"
+    when
+    then
+        "What is your favourite book?"
+        //both like books
+end
+rule "A like tv"
+    when
+    then
+end
+rule "B like tv"
+    when
+    then
+end
+rule "A and B like tv"
+    when
+    then
+        "What is your favourite thing on tv?"
+        //both like tv
+end
+rule "A like Movies and B like Books"
+    when
+    then
+        "What is your favourite book that is done after movie"
+end
+rule "B like Movies and A like Books"
+    when
+    then
+        "What is your favourite movie that is done after book"
+end
+rule "A likes music"
+    when
+    then
+end
+rule "B likes music"
+    when
+    then
+end
+
+rule "A likes music and B likes music"
+    when
+    then
+    //both like music
+end
+
+rule
+    when "Both like music and both like tv"
+    then
+        "What is your favourite song from a tv show or movie?"
+end
+
+
