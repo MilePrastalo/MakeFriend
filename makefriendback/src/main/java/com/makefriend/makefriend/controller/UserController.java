@@ -2,8 +2,8 @@ package com.makefriend.makefriend.controller;
 
 import com.makefriend.makefriend.dto.*;
 import com.makefriend.makefriend.model.Interest;
-import com.makefriend.makefriend.model.Trait;
 import com.makefriend.makefriend.model.User;
+import com.makefriend.makefriend.model.UserTrait;
 import com.makefriend.makefriend.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -54,8 +54,8 @@ public class UserController {
 
     @GetMapping(value = "{userId}/traits")
     public ResponseEntity<TraitsDTO> getTraits(@PathVariable("userId") Long userId) {
-        List<Trait> traits = userService.getTraits(userId);
-        List<TraitDTO> dtoTraits = traits.stream().map(TraitDTO::new).collect(Collectors.toList());
+        List<UserTrait> traits = userService.getTraits(userId);
+        List<TraitDTO> dtoTraits = traits.stream().map(userTrait -> new TraitDTO(userTrait.getTrait())).collect(Collectors.toList());
         TraitsDTO dto = new TraitsDTO(dtoTraits);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }

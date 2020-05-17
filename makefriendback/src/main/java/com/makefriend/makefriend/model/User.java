@@ -35,7 +35,7 @@ public class User implements UserDetails {
     private Set<Interest> interests;
 
     @OneToMany
-    private Set<Trait> traits;
+    private Set<UserTrait> traits;
 
     @ManyToMany
     private Set<User> friends;
@@ -145,11 +145,11 @@ public class User implements UserDetails {
         this.interests = interests;
     }
 
-    public Set<Trait> getTraits() {
+    public Set<UserTrait> getTraits() {
         return traits;
     }
 
-    public void setTraits(Set<Trait> traits) {
+    public void setTraits(Set<UserTrait> traits) {
         this.traits = traits;
     }
 

@@ -2,39 +2,47 @@ package com.makefriend.drools
 
 import com.makefriend.makefriend.model.FriendMatch
 rule "User A likes sport"
+agenda-group "Interests"
+lock-on-active true
     when
         $fm: FriendMatch(userAInterests contains "Football" || userAInterests contains "Basketball" || userAInterests contains "Volleyball")
     then
-        $fm.likeCategory(1,"SPORT");
+        $fm.getAlikesCategories().add("SPORT");
+        System.out.println("This");
         update($fm)
 end
 
 rule "User B likes sport"
+agenda-group "Interests"
+lock-on-active true
     when
         $fm: FriendMatch(userBInterests contains "Football" || userBInterests contains "Basketball" || userBInterests contains "Volleyball")
     then
-        $fm.likeCategory(2,"SPORT");
+        $fm.getBlikesCategories().add("SPORT");
         update($fm)
 end
 
 rule "User A and User B like sport"
-lock-on-active true
+agenda-group "Interests"
     when
-        $fm: FriendMatch(getCategoryValue(1,"SPORT") && getCategoryValue(2,"SPORT"))
+        $fm: FriendMatch(!(getProcessed() contains "SPORT") && getAlikesCategories() contains "SPORT" && getBlikesCategories() contains "SPORT")
     then
         $fm.setSimilar($fm.getSimilar()+1);
+        $fm.getProcessed().add("SPORT");
 end
 
 rule "User A and User B like football"
+agenda-group "Interests"
 lock-on-active true
     when
-        $fm: FriendMatch()
+        $fm: FriendMatch(getUserAInterests() contains "Football" && getUserBInterests() contains "Football")
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end
 
 rule "User A and User B like basketball"
 lock-on-active true
+agenda-group "Interests"
     when
         $fm: FriendMatch(userAInterests contains "Basketball" && userBInterests contains "Basketball")
     then
@@ -43,6 +51,7 @@ end
 
 rule "User A and User B like volleyball"
 lock-on-active true
+agenda-group "Interests"
     when
         $fm: FriendMatch(userAInterests contains "Volleyball" && userBInterests contains "Volleyball")
     then
@@ -50,38 +59,45 @@ lock-on-active true
 end
 
 rule "User A likes tv and movies"
+lock-on-active true
+agenda-group "Interests"
     when
         $fm: FriendMatch(userAInterests contains "TV Shows" || userAInterests contains "Movies")
     then
-        $fm.likeCategory(1, "TVMOVIE");
+        $fm.getAlikesCategories().add("TVMOVIE");
         update($fm)
 end
 
 rule "User B likes tv and movies"
+lock-on-active true
+agenda-group "Interests"
     when
         $fm: FriendMatch(userBInterests contains "TV Shows" || userBInterests contains "Movies")
     then
-        $fm.likeCategory(2, "TVMOVIE");
+        $fm.getBlikesCategories().add("TVMOVIE");
         update($fm);
 end
 
 rule "User A and User B like tv and movies"
-lock-on-active true
+agenda-group "Interests"
     when
-        $fm: FriendMatch(getCategoryValue(1,"TVMOVIE") && getCategoryValue(2, "TVMOVIE"))
+        $fm: FriendMatch(!(getProcessed() contains "TVMOVIE") && getAlikesCategories() contains "TVMOVIE" && getBlikesCategories() contains "TVMOVIE")
     then
         $fm.setSimilar($fm.getSimilar()+1);
+        $fm.getProcessed().add("TVMOVIE");
 end
 
 rule "User A and User B like tv-shows"
+agenda-group "Interests"
 lock-on-active true
     when
-        $fm: FriendMatch(getUserAInterests() contains "TV SHOWS" && getUserBInterests() contains "TV SHOWS")
+        $fm: FriendMatch(getUserAInterests() contains "TV Shows" && getUserBInterests() contains "TV Shows")
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end
 
 rule "User A and User B like movies"
+agenda-group "Interests"
 lock-on-active true
     when
         $fm:FriendMatch(getUserAInterests() contains "Movies" && getUserBInterests() contains "Movies")
@@ -90,31 +106,37 @@ lock-on-active true
 end
 
 rule "User A likes books"
+agenda-group "Interests"
+lock-on-active true
     when
     $fm:FriendMatch(getUserAInterests() contains "FantasyBooks" || getUserAInterests() contains "DramaBooks" || getUserAInterests() contains "PoetryBooks" || getUserAInterests() contains "DetectiveBooks" || getUserAInterests() contains "HistoryBooks")
     then
-        $fm.likeCategory(1,"BOOKS");
+        $fm.getAlikesCategories().add("BOOKS");
         update($fm)
 end
 
 rule "User B likes books"
+lock-on-active true
+agenda-group "Interests"
     when
         $fm:FriendMatch(getUserBInterests() contains "FantasyBooks" || getUserBInterests() contains "DramaBooks" || getUserBInterests() contains "PoetryBooks" || getUserBInterests() contains "DetectiveBooks" || getUserBInterests() contains "HistoryBooks")
     then
-        $fm.likeCategory(2,"BOOKS");
+        $fm.getBlikesCategories().add("BOOKS");
         update($fm)
 end
 
 rule "Users A and B like books"
-lock-on-active true
+agenda-group "Interests"
     when
-        $fm:FriendMatch(getCategoryValue(1,"BOOKS") && getCategoryValue(2, "BOOKS"))
+        $fm:FriendMatch(!(getProcessed() contains "BOOKS") && getAlikesCategories() contains "BOOKS" && getBlikesCategories() contains "BOOKS")
     then
         $fm.setSimilar($fm.getSimilar()+1);
+        $fm.getProcessed().add("BOOKS");
 end
 
 rule "Users A and B like fantasy books"
 lock-on-active true
+agenda-group "Interests"
     when
         $fm:FriendMatch(getUserAInterests() contains "FantasyBooks" && getUserBInterests() contains "FantasyBooks")
     then
@@ -123,6 +145,7 @@ end
 
 rule "Users A and B like drama books"
 lock-on-active true
+agenda-group "Interests"
     when
         $fm:FriendMatch(getUserAInterests() contains "DramaBooks" && getUserBInterests() contains "DramaBooks")
     then
@@ -131,78 +154,91 @@ end
 
 rule "Users A and B like poetry books"
 lock-on-active true
+agenda-group "Interests"
     when
-        $fm:FriendMatch(isMatchTraits() && getUserAInterests() contains "PoetryBooks" && getUserBInterests() contains "PoetryBooks")
+        $fm:FriendMatch(getUserAInterests() contains "PoetryBooks" && getUserBInterests() contains "PoetryBooks")
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end
 
 rule "Users A and B like detective books"
 lock-on-active true
+agenda-group "Interests"
     when
-        $fm:FriendMatch(isMatchTraits() && getUserAInterests() contains "DetectiveBooks" && getUserBInterests() contains "DetectiveBooks")
+        $fm:FriendMatch(getUserAInterests() contains "DetectiveBooks" && getUserBInterests() contains "DetectiveBooks")
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end
 
 rule "Users A and B like history books"
 lock-on-active true
+agenda-group "Interests"
     when
-        $fm:FriendMatch(isMatchTraits() && getUserAInterests() contains "HistoryBooks" && getUserBInterests() contains "HistoryBooks")
+        $fm:FriendMatch(getUserAInterests() contains "HistoryBooks" && getUserBInterests() contains "HistoryBooks")
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end
 
 rule "User A likes music"
+lock-on-active true
+agenda-group "Interests"
     when
-        $fm:FriendMatch(isMatchTraits() && getUserAInterests() contains "Hip-hop" || getUserAInterests() contains "Rock" || getUserAInterests() contains "Metal" || getUserAInterests() contains "Pop")
+        $fm:FriendMatch(getUserAInterests() contains "Hip-hop" || getUserAInterests() contains "Rock" || getUserAInterests() contains "Metal" || getUserAInterests() contains "Pop")
     then
-        $fm.likeCategory(1,"MUSIC");
+        $fm.getAlikesCategories().add("MUSIC");
+        update($fm)
 end
-
 rule "User B likes music"
+lock-on-active true
+agenda-group "Interests"
     when
-        $fm:FriendMatch(isMatchTraits() &&  getUserBInterests() contains "Hip-hop" || getUserBInterests() contains "Rock" || getUserBInterests() contains "Metal" || getUserBInterests() contains "Pop")
+        $fm:FriendMatch(getUserBInterests() contains "Hip-hop" || getUserBInterests() contains "Rock" || getUserBInterests() contains "Metal" || getUserBInterests() contains "Pop")
     then
-        $fm.likeCategory(2,"MUSIC");
+        $fm.getBlikesCategories().add("MUSIC");
+        update($fm)
 end
 
 rule "Users A  and B like music"
+agenda-group "Interests"
     when
-        $fm:FriendMatch(isMatchTraits() && getCategoryValue(1,"MUSIC") && $fm:FriendMatch(getCategoryValue(2,"MUSIC")))
+        $fm:FriendMatch(!(getProcessed() contains "MUSIC") && getAlikesCategories() contains "MUSIC" && getBlikesCategories() contains "MUSIC")
     then
         $fm.setSimilar($fm.getSimilar()+1);
+        $fm.getProcessed().add("MUSIC");
 end
 
 rule "Users A  and B like hip-hop"
+agenda-group "Interests"
 lock-on-active true
     when
-        $fm:FriendMatch(isMatchTraits() && getUserAInterests() contains "Hip-hop" && getUserBInterests() contains "Hip-hop")
+        $fm:FriendMatch(getUserAInterests() contains "Hip-hop" && getUserBInterests() contains "Hip-hop")
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end
 
 rule "Users A  and B like rock"
+agenda-group "Interests"
 lock-on-active true
     when
-    $fm:FriendMatch(isMatchTraits() && getUserAInterests() contains "Rock" && getUserBInterests() contains "Rock")
+    $fm:FriendMatch(getUserAInterests() contains "Rock" && getUserBInterests() contains "Rock")
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end
 
 rule "Users A  and B like metal"
+agenda-group "Interests"
 lock-on-active true
     when
-    $fm:FriendMatch(isMatchTraits() && getUserAInterests() contains "Metal" && getUserBInterests() contains "Metal")
+    $fm:FriendMatch(getUserAInterests() contains "Metal" && getUserBInterests() contains "Metal")
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end
 
 rule "Users A  and B like pop"
+agenda-group "Interests"
 lock-on-active true
     when
-    $fm:FriendMatch(isMatchTraits() && getUserAInterests() contains "Pop" && getUserBInterests() contains "Pop")
+    $fm:FriendMatch(getUserAInterests() contains "Pop" && getUserBInterests() contains "Pop")
     then
         $fm.setSimilar($fm.getSimilar()+1);
 end
-

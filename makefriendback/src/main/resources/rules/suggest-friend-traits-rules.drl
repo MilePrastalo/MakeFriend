@@ -1,80 +1,136 @@
+package com.makefriend.drools
+
 import com.makefriend.makefriend.model.FriendMatch
-rule "Same smoking"
+rule "Same smoking positive"
+agenda-group "Traits"
     when
-        $fm:FriendMatch(haveSameTrait("Smoking"))
+        $fm:FriendMatch(getPossitiveATraits() contains "Smoking" && getPossitiveBTraits() contains "Smoking")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
-        $fm.setCheckedTraits($fm.getCheckedTraits()+1);
-        update($fm)
+        System.out.println("IS working?");
 end
 
-rule "different smoking"
+rule "Same smoking negative"
+agenda-group "Traits"
     when
-        $fm:FriendMatch(haveSameTrait("Smoking"))
-    then
-        $fm.setSimilarTraits($fm.getSimilarTraits()-1);
-        $fm.setCheckedTraits($fm.getCheckedTraits()+1);
-        update($fm)
-end
-
-rule "Same alcohol consumption"
-    when
-        $fm:FriendMatch(haveSameTrait("Drinks"))
+        $fm:FriendMatch(getNegativeATraits() contains "Smoking" && getNegativeBTraits() contains "Smoking")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
-        $fm.setCheckedTraits($fm.getCheckedTraits()+1);
-        update($fm)
+                System.out.println("IS working?");
+
 end
 
-rule "different alcohol consumption"
+rule "Different smoking 1"
+agenda-group "Traits"
     when
-        $fm:FriendMatch(haveSameTrait("!Drinks"))
+        $fm:FriendMatch(getNegativeATraits() contains "Smoking" && getPossitiveBTraits() contains "Smoking")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
-        $fm.setCheckedTraits($fm.getCheckedTraits()+1);
-        update($fm)
+                System.out.println("IS working?");
+
 end
 
-rule "Same physical activity"
+rule "different smoking 2"
+agenda-group "Traits"
     when
-        $fm:FriendMatch(haveSameTrait("Active"))
+        $fm:FriendMatch(getPossitiveATraits() contains "Smoking" && getNegativeBTraits() contains "Smoking")
+    then
+        $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+
+end
+
+rule "Same drinking positive"
+agenda-group "Traits"
+    when
+        $fm:FriendMatch(getPossitiveATraits() contains "Drinks" && getPossitiveBTraits() contains "Drinks")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
-        $fm.setCheckedTraits($fm.getCheckedTraits()+1);
-        update($fm)
 end
 
-rule "different physical activity"
+rule "Same drinking negative"
+agenda-group "Traits"
     when
-        $fm:FriendMatch(~haveSameTrait("Active"))
-    then
-        $fm.setSimilarTraits($fm.getSimilarTraits()-1);
-        $fm.setCheckedTraits($fm.getCheckedTraits()+1);
-        update($fm)
-end
-
-rule "Same university education"
-    when
-        $fm:FriendMatch(haveSameTrait("University"))
+        $fm:FriendMatch(getNegativeATraits() contains "Drinks" && getNegativeBTraits() contains "Drinks")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
-        $fm.setCheckedTraits($fm.getCheckedTraits()+1);
-        update($fm)
 end
 
-rule "Different university education"
+rule "Different drinking 1"
+agenda-group "Traits"
     when
-        $fm:FriendMatch(!haveSameTrait("University"))
+        $fm:FriendMatch(getNegativeATraits() contains "Drinks" && getPossitiveBTraits() contains "Drinks")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
-        $fm.setCheckedTraits($fm.getCheckedTraits()+1);
-        update($fm)
 end
 
-rule "finished evals"
+rule "different drinking 2"
+agenda-group "Traits"
     when
-        $fm:FriendMatch(getCheckedTraits()>=4)
+        $fm:FriendMatch(getPossitiveATraits() contains "Drinks" && getNegativeBTraits() contains "Drinks")
     then
-        $fm.setMatchTraits($fm.getSimilarTraits()>0);
-        update($fm);
+        $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+end
+
+rule "Same Active positive"
+agenda-group "Traits"
+    when
+        $fm:FriendMatch(getPossitiveATraits() contains "Active" && getPossitiveBTraits() contains "Active")
+    then
+        $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+end
+
+rule "Same Active negative"
+agenda-group "Traits"
+    when
+        $fm:FriendMatch(getNegativeATraits() contains "Active" && getNegativeBTraits() contains "Active")
+    then
+        $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+end
+
+rule "Different Active 1"
+agenda-group "Traits"
+    when
+        $fm:FriendMatch(getNegativeATraits() contains "Active" && getPossitiveBTraits() contains "Active")
+    then
+        $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+end
+
+rule "different Active 2"
+agenda-group "Traits"
+    when
+        $fm:FriendMatch(getPossitiveATraits() contains "Active" && getNegativeBTraits() contains "Active")
+    then
+        $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+end
+
+rule "Same University positive"
+agenda-group "Traits"
+    when
+        $fm:FriendMatch(getPossitiveATraits() contains "University" && getPossitiveBTraits() contains "University")
+    then
+        $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+end
+
+rule "Same University negative"
+agenda-group "Traits"
+    when
+        $fm:FriendMatch(getNegativeATraits() contains "University" && getNegativeBTraits() contains "University")
+    then
+        $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+end
+
+rule "Different University 1"
+agenda-group "Traits"
+    when
+        $fm:FriendMatch(getNegativeATraits() contains "University" && getPossitiveBTraits() contains "University")
+    then
+        $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+end
+
+rule "different University 2"
+agenda-group "Traits"
+    when
+        $fm:FriendMatch(getPossitiveATraits() contains "University" && getNegativeBTraits() contains "University")
+    then
+        $fm.setSimilarTraits($fm.getSimilarTraits()-1);
 end

@@ -5,14 +5,20 @@ import java.util.List;
 public class MessageSuggest {
     private List<String> userAInterests;
     private List<String> userBInterests;
-    private List<CategoryLike> categoriesLiked;
+    private List<String> categoriesALiked;
+    private List<String> categoriesBLiked;
     private List<String> existCombination;
+    private List<MessageFromRule> messageSuggests;
+    private List<String> commonCategories;
 
-    public MessageSuggest(List<String> userAInterests, List<String> userBInterests, List<CategoryLike> categoriesLiked, List<String> existCombination) {
+    public MessageSuggest(List<String> userAInterests, List<String> userBInterests, List<String> categoriesALiked, List<String> categoriesBLiked, List<String> existCombination, List<MessageFromRule> messageSuggests, List<String> commonCategories) {
         this.userAInterests = userAInterests;
         this.userBInterests = userBInterests;
-        this.categoriesLiked = categoriesLiked;
+        this.categoriesALiked = categoriesALiked;
+        this.categoriesBLiked = categoriesBLiked;
         this.existCombination = existCombination;
+        this.messageSuggests = messageSuggests;
+        this.commonCategories = commonCategories;
     }
 
     public MessageSuggest() {
@@ -34,12 +40,20 @@ public class MessageSuggest {
         this.userBInterests = userBInterests;
     }
 
-    public List<CategoryLike> getCategoriesLiked() {
-        return categoriesLiked;
+    public List<String> getCategoriesALiked() {
+        return categoriesALiked;
     }
 
-    public void setCategoriesLiked(List<CategoryLike> categoriesLiked) {
-        this.categoriesLiked = categoriesLiked;
+    public void setCategoriesALiked(List<String> categoriesALiked) {
+        this.categoriesALiked = categoriesALiked;
+    }
+
+    public List<String> getCategoriesBLiked() {
+        return categoriesBLiked;
+    }
+
+    public void setCategoriesBLiked(List<String> categoriesBLiked) {
+        this.categoriesBLiked = categoriesBLiked;
     }
 
     public List<String> getExistCombination() {
@@ -49,4 +63,22 @@ public class MessageSuggest {
     public void setExistCombination(List<String> existCombination) {
         this.existCombination = existCombination;
     }
+
+    public List<MessageFromRule> getMessageSuggests() {
+        return messageSuggests;
+    }
+
+    public void setMessageSuggests(List<MessageFromRule> messageSuggests) {
+        this.messageSuggests = messageSuggests;
+    }
+
+
+    public List<String> getCommonCategories() {
+        return commonCategories;
+    }
+
+    public void setCommonCategories(List<String> commonCategories) {
+        this.commonCategories = commonCategories;
+    }
+
 }

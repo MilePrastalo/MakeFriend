@@ -8,6 +8,7 @@ import com.makefriend.makefriend.dto.UserInterestsDTO;
 import com.makefriend.makefriend.model.Interest;
 import com.makefriend.makefriend.model.Trait;
 import com.makefriend.makefriend.model.User;
+import com.makefriend.makefriend.model.UserTrait;
 import com.makefriend.makefriend.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -45,7 +46,7 @@ public class UserService implements UserDetailsService {
         return new ArrayList<>(user.getInterests());
     }
 
-    public List<Trait> getTraits(Long userId) {
+    public List<UserTrait> getTraits(Long userId) {
         User user = findOne(userId);
         return new ArrayList<>(user.getTraits());
     }
@@ -61,7 +62,7 @@ public class UserService implements UserDetailsService {
     public User setTraits(Long userId, TraitsDTO traitsDTO) {
         User user = findOne(userId);
         Set<Trait> traits = traitsDTO.getTraits().stream().map(TraitConverter::fromDTO).collect(Collectors.toSet());
-        user.setTraits(traits);
+        //user.setTraits(traits);
         return userRepository.save(user);
     }
 

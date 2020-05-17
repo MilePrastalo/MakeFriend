@@ -13,15 +13,11 @@ public class Trait {
     @Column
     private String name;
 
-    @Column
-    private Boolean value;
-
     public Trait() {
     }
 
-    public Trait(String name, Boolean value) {
+    public Trait(String name) {
         this.name = name;
-        this.value = value;
     }
 
     public Long getId() {
@@ -40,11 +36,4 @@ public class Trait {
         this.name = name;
     }
 
-    public Boolean getValue() {
-        return value;
-    }
-
-    public void setValue(Boolean value) {
-        this.value = value;
-    }
 }

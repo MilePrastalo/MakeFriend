@@ -50,8 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-				.authorizeRequests().antMatchers("/auth/**").permitAll().antMatchers(HttpMethod.OPTIONS, "/api/**")
-				.permitAll()
+				.authorizeRequests().antMatchers("/auth/**").permitAll()
+				.antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
+				.antMatchers(HttpMethod.GET,"/api/**").permitAll()
 				.anyRequest().authenticated().and().httpBasic();
 
 
