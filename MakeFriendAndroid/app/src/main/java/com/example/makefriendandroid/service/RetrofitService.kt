@@ -6,15 +6,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitService {
     companion object {
         private var retrofit: Retrofit? = null
-        private var path: String = "http://localhost:8080"
         fun get_retrofit(): Retrofit {
-            if (RetrofitService.retrofit == null) {
-                RetrofitService.retrofit = Retrofit.Builder()
-                    .baseUrl(RetrofitService.path)
+            if (retrofit == null) {
+                retrofit = Retrofit.Builder()
+                    .baseUrl("http://10.0.2.2:8080/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             }
-            return RetrofitService.retrofit!!
+            return retrofit!!
         }
     }
 

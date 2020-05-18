@@ -6,8 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.makefriendandroid.Adapters.FriendSuggestionsAdapter
 
 import com.example.makefriendandroid.R
+import kotlinx.android.synthetic.main.home_fragment.*
 
 class HomeFragment : Fragment() {
 
@@ -21,13 +26,21 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.home_fragment, container, false)
+        val view = inflater.inflate(R.layout.home_fragment, container, false)
+
+        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel.getSuggestedFriends()
+        val rec = fiendSuggestionsRecycler
+        rec.layoutManager = GridLayoutManager(context,3)
+        rec.adapter = FriendSuggestionsAdapter(ArrayList())
+        viewModel.suggested.observe(viewLifecycleOwner, Observer {
+            rec.adapter = FriendSuggestionsAdapter(it.suggestions)
+        })
     }
 
 }

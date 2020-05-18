@@ -2,6 +2,7 @@ package com.example.makefriendandroid.service
 
 import com.example.makefriendandroid.model.FriendRequest
 import com.example.makefriendandroid.model.lists.FriendRequests
+import com.example.makefriendandroid.model.lists.FriendSuggestions
 import com.example.makefriendandroid.model.lists.UsersBasic
 import retrofit2.Call
 import retrofit2.http.Body
@@ -11,7 +12,7 @@ import retrofit2.http.Path
 
 interface FriendsService {
     @GET("api/friends/suggested/{userId}")
-    fun getSuggestedFriend(@Path("userId") userId: Long): Call<Void>
+    fun getSuggestedFriend(@Path("userId") userId: Long): Call<FriendSuggestions>
 
     @GET("api/friends/all/{userId}")
     fun getAllFriends(@Path("userId") userId: Long): Call<UsersBasic>
