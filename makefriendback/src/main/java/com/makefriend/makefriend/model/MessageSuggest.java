@@ -1,5 +1,6 @@
 package com.makefriend.makefriend.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MessageSuggest {
@@ -22,6 +23,11 @@ public class MessageSuggest {
     }
 
     public MessageSuggest() {
+        categoriesALiked = new ArrayList<>();
+        categoriesBLiked = new ArrayList<>();
+        commonCategories = new ArrayList<>();
+        messageSuggests = new ArrayList<>();
+        existCombination = new ArrayList<>();
     }
 
     public List<String> getUserAInterests() {

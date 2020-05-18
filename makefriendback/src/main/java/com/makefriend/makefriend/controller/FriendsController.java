@@ -29,7 +29,7 @@ public class FriendsController {
 
     @GetMapping("suggested/{userId}")
     public ResponseEntity<FriendSuggestionsDTO> getSuggestedFriend(@PathVariable("userId") Long userId) {
-        List<UserBasicDto> suggestions = new ArrayList<>();
+        List<FriendSuggestionDTO> suggestions = new ArrayList<>();
         FriendSuggestionsDTO dto = new FriendSuggestionsDTO(suggestions);
 
         //Mock data
@@ -117,21 +117,8 @@ public class FriendsController {
 
             fm.setUserAInterests(userQuerry.getInterests().stream().map(Interest::getName).collect(Collectors.toList()));
             fm.setUserATraits(new ArrayList<>(userQuerry.getTraits()));
-            List<CategoryLike> alikesCategories = new ArrayList<>();
-            for (String cat : categories) {
-                CategoryLike ctl = new CategoryLike(cat, false);
-                alikesCategories.add(ctl);
-            }
-
             fm.setUserBInterests(u.getInterests().stream().map(Interest::getName).collect(Collectors.toList()));
             fm.setUserBTraits(new ArrayList<>(u.getTraits()));
-            List<CategoryLike> blikesCategories = new ArrayList<>();
-            for (String cat : categories) {
-                CategoryLike ctl = new CategoryLike(cat, false);
-                blikesCategories.add(ctl);
-            }
-
-
             fm.setSimilar(0);
             fm.setMatchTraits(false);
             fm.setCheckedTraits(0);
@@ -164,7 +151,7 @@ public class FriendsController {
 
             KieSession session = kieContainer.newKieSession("session");
             session.insert(fm);
-            //session.getAgenda().getAgendaGroup("Traits").setFocus();
+            session.getAgenda().getAgendaGroup("Traits").setFocus();
             session.fireAllRules();
 
             if (fm.getSimilarTraits() >= 0) {
@@ -173,6 +160,8 @@ public class FriendsController {
             }
             session.dispose();
 
+            FriendSuggestionDTO s = new FriendSuggestionDTO(u.getId(),u.getFirstName(),u.getLastName(),fm.getSimilar());
+            suggestions.add(s);
         }
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }

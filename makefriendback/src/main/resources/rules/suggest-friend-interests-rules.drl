@@ -8,7 +8,6 @@ lock-on-active true
         $fm: FriendMatch(userAInterests contains "Football" || userAInterests contains "Basketball" || userAInterests contains "Volleyball")
     then
         $fm.getAlikesCategories().add("SPORT");
-        System.out.println("This");
         update($fm)
 end
 

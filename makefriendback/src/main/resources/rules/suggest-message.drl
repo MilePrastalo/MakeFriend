@@ -53,11 +53,10 @@ end
 
 rule "A and B like Sport"
 agenda-group "Message"
-lock-on-active true
     when
-        $ms:MessageSuggest(getCategoriesALiked() contains "SPORT" && getCategoriesBLiked() contains "SPORT")
+        $ms:MessageSuggest(!(getCommonCategories() contains "SPORT") && getCategoriesALiked() contains "SPORT" && getCategoriesBLiked() contains "SPORT")
     then
-        MessageFromRule messageFromRule = new MessageFromRule("What is your favourite sport?",2);
+        MessageFromRule messageFromRule = new MessageFromRule("What is your favourite sport?",1);
         $ms.getMessageSuggests().add(messageFromRule);
         $ms.getCommonCategories().add("SPORT");
         update($ms);
@@ -85,9 +84,8 @@ end
 
 rule "A and B like Books"
 agenda-group "Message"
-lock-on-active true
     when
-        $ms: MessageSuggest(getCategoriesALiked() contains "BOOKS" && getCategoriesBLiked() contains "BOOKS")
+        $ms: MessageSuggest(!(getCommonCategories() contains "BOOKS") && getCategoriesALiked() contains "BOOKS" && getCategoriesBLiked() contains "BOOKS")
     then
         MessageFromRule messageFromRule = new MessageFromRule("What is your favourite book?",1);
         $ms.getMessageSuggests().add(messageFromRule);
@@ -117,9 +115,8 @@ end
 
 rule "A and B like tv"
 agenda-group "Message"
-lock-on-active true
     when
-        $ms: MessageSuggest(getCategoriesALiked()contains "TVMOVIE" && getCategoriesBLiked() contains "TVMOVIE")
+        $ms: MessageSuggest(!(getCommonCategories() contains "BOOKS") && getCategoriesALiked()contains "TVMOVIE" && getCategoriesBLiked() contains "TVMOVIE")
     then
         MessageFromRule messageFromRule = new MessageFromRule("What is your favourite thing on tv?",1);
         $ms.getMessageSuggests().add(messageFromRule);
@@ -129,7 +126,6 @@ end
 
 rule "A like Movies and B like Books"
 agenda-group "Message"
-lock-on-active true
     when
         $ms:MessageSuggest(getCategoriesALiked() contains "BOOKS" && getCategoriesBLiked() contains "Movies")
     then
@@ -139,7 +135,6 @@ end
 
 rule "B like Movies and A like Books"
 agenda-group "Message"
-lock-on-active true
     when
         $ms:MessageSuggest(getCategoriesALiked() contains "BOOKS" && getUserBInterests() contains "Movies")
     then
@@ -169,9 +164,8 @@ end
 
 rule "A likes music and B likes music"
 agenda-group "Message"
-lock-on-active true
     when
-        $ms:MessageSuggest(getCategoriesALiked() contains "MUSIC" && getCategoriesBLiked() contains "MUSIC")
+        $ms:MessageSuggest(!(getCommonCategories() contains "MUSIC") && getCategoriesALiked() contains "MUSIC" && getCategoriesBLiked() contains "MUSIC")
     then
         MessageFromRule messageFromRule = new MessageFromRule("What is your favourite song?",1);
         $ms.getMessageSuggests().add(messageFromRule);

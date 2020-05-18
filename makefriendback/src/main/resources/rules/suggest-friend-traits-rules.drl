@@ -7,7 +7,6 @@ agenda-group "Traits"
         $fm:FriendMatch(getPossitiveATraits() contains "Smoking" && getPossitiveBTraits() contains "Smoking")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
-        System.out.println("IS working?");
 end
 
 rule "Same smoking negative"
@@ -16,7 +15,6 @@ agenda-group "Traits"
         $fm:FriendMatch(getNegativeATraits() contains "Smoking" && getNegativeBTraits() contains "Smoking")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
-                System.out.println("IS working?");
 
 end
 
@@ -26,7 +24,6 @@ agenda-group "Traits"
         $fm:FriendMatch(getNegativeATraits() contains "Smoking" && getPossitiveBTraits() contains "Smoking")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
-                System.out.println("IS working?");
 
 end
 
