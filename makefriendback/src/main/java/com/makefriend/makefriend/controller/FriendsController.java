@@ -1,7 +1,9 @@
 package com.makefriend.makefriend.controller;
 
 import com.makefriend.makefriend.dto.*;
-import com.makefriend.makefriend.model.*;
+import com.makefriend.makefriend.model.FriendMatch;
+import com.makefriend.makefriend.model.FriendRequest;
+import com.makefriend.makefriend.model.User;
 import com.makefriend.makefriend.service.FriendRequestService;
 import com.makefriend.makefriend.service.InterestCategoryService;
 import com.makefriend.makefriend.service.InterestService;
@@ -50,7 +52,7 @@ public class FriendsController {
             if (u == userQuerry) {
                 continue;
             }
-            FriendMatch fm = new FriendMatch(userQuerry,u);
+            FriendMatch fm = new FriendMatch(userQuerry, u);
             friendMatchList.add(fm);
             KieSession session = kieContainer.newKieSession("session");
             session.insert(fm);
@@ -63,9 +65,31 @@ public class FriendsController {
             }
             session.dispose();
 
-            FriendSuggestionDTO s = new FriendSuggestionDTO(u.getId(),u.getFirstName(),u.getLastName(),fm.getSimilar());
+            FriendSuggestionDTO s = new FriendSuggestionDTO(u.getId(), u.getFirstName(), u.getLastName(), fm.getSimilar());
             suggestions.add(s);
         }
+
+        //Sort
+
+        for (int i = 0; i < dto.getSuggestions().size() - 1; i++) {
+            for (int j = i + 1; j < dto.getSuggestions().size(); j++) {
+                if (dto.getSuggestions().get(j).getSimmilar() > dto.getSuggestions().get(i).getSimmilar()) {
+                    FriendSuggestionDTO temp = dto.getSuggestions().get(j);
+                    dto.getSuggestions().set(j, dto.getSuggestions().get(i));
+                    dto.getSuggestions().set(i, temp);
+                }
+            }
+        }
+        //limit to 6
+        ArrayList<FriendSuggestionDTO> newList = new ArrayList<>();
+        for(int i=0;i<6;i++){
+            if(dto.getSuggestions().size()<=i){
+                break;
+            }
+            newList.add(dto.getSuggestions().get(i));
+        }
+        dto.setSuggestions(newList);
+
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
