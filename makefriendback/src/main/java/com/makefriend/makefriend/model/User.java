@@ -31,7 +31,7 @@ public class User implements UserDetails {
     private String email;
 
 
-    @OneToMany
+    @ManyToMany
     private Set<Interest> interests;
 
     @OneToMany

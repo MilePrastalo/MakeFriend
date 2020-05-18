@@ -2,6 +2,7 @@ package com.makefriend.makefriend.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FriendMatch {
     private List<String> userAInterests;
@@ -25,7 +26,6 @@ public class FriendMatch {
 
     private int similar;
     private boolean matchTraits;
-    private int checkedTraits;
     private int similarTraits;
 
     public FriendMatch() {
@@ -39,7 +39,7 @@ public class FriendMatch {
     }
 
 
-    public FriendMatch(List<String> userAInterests, List<UserTrait> userATraits, List<String> alikesCategories, List<String> userBInterests, List<UserTrait> userBTraits, List<String> blikesCategories, int similar, boolean matchTraits, int checkedTraits) {
+    public FriendMatch(List<String> userAInterests, List<UserTrait> userATraits, List<String> alikesCategories, List<String> userBInterests, List<UserTrait> userBTraits, List<String> blikesCategories, int similar, boolean matchTraits) {
         this.userAInterests = userAInterests;
         this.userATraits = userATraits;
         this.alikesCategories = alikesCategories;
@@ -48,7 +48,27 @@ public class FriendMatch {
         this.blikesCategories = blikesCategories;
         this.similar = similar;
         this.matchTraits = matchTraits;
-        this.checkedTraits = checkedTraits;
+
+    }
+
+    public FriendMatch(User u1, User u2) {
+
+        this.userAInterests = u1.getInterests().stream().map(Interest::getName).collect(Collectors.toList());
+        this.userBInterests = u2.getInterests().stream().map(Interest::getName).collect(Collectors.toList());
+
+        this.possitiveATraits = u1.getTraits().stream().filter(UserTrait::isValue).map(userTrait -> userTrait.getTrait().getName()).collect(Collectors.toList());
+        this.negativeATraits = u1.getTraits().stream().filter(userTrait -> !userTrait.isValue()).map(userTrait -> userTrait.getTrait().getName()).collect(Collectors.toList());
+        this.possitiveBTraits = u2.getTraits().stream().filter(UserTrait::isValue).map(userTrait -> userTrait.getTrait().getName()).collect(Collectors.toList());
+        this.negativeBTraits = u2.getTraits().stream().filter(userTrait -> !userTrait.isValue()).map(userTrait -> userTrait.getTrait().getName()).collect(Collectors.toList());
+
+
+        this.alikesCategories = new ArrayList<>();
+        this.blikesCategories = new ArrayList<>();
+        this.processed = new ArrayList<>();
+
+        similar = 0;
+        matchTraits = false;
+        similarTraits = 0;
 
     }
 
@@ -114,14 +134,6 @@ public class FriendMatch {
 
     public void setMatchTraits(boolean matchTraits) {
         this.matchTraits = matchTraits;
-    }
-
-    public int getCheckedTraits() {
-        return checkedTraits;
-    }
-
-    public void setCheckedTraits(int checkedTraits) {
-        this.checkedTraits = checkedTraits;
     }
 
     public int getSimilarTraits() {

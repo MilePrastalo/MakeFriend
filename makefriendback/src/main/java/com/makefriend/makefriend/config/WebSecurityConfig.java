@@ -19,8 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableWebSecurity
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
@@ -48,12 +48,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
+		/*http
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authorizeRequests().antMatchers("/auth/**").permitAll()
 				.antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
 				.antMatchers(HttpMethod.GET,"/api/**").permitAll()
-				.anyRequest().authenticated().and().httpBasic();
+				.antMatchers(HttpMethod.GET,"/h2/**").permitAll()
+				.antMatchers(HttpMethod.POST,"/h2/**").permitAll()
+				.antMatchers(HttpMethod.GET,"/**").permitAll()
+				.antMatchers(HttpMethod.OPTIONS, "/h2/**").permitAll()
+				.anyRequest().authenticated().and().httpBasic();*/
 
 
 	}
@@ -61,7 +65,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) {
 		// TokenAuthenticationFilter will ignore the following
-		web.ignoring().antMatchers(HttpMethod.GET, "/api/certificate/");// Change this after implementing certificates
+		web.ignoring().antMatchers(HttpMethod.GET, "/h2/**");// Change this after implementing certificates
+		web.ignoring().antMatchers(HttpMethod.GET, "/api/**");// Change this after implementing certificates
+		web.ignoring().antMatchers(HttpMethod.POST, "/h2/**");// Change this after implementing certificates
+		web.ignoring().antMatchers(HttpMethod.POST, "/api/**");// Change this after implementing certificates
+
 	}
 
 }

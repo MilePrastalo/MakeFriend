@@ -2,6 +2,7 @@ package com.makefriend.makefriend.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MessageSuggest {
     private List<String> userAInterests;
@@ -23,6 +24,16 @@ public class MessageSuggest {
     }
 
     public MessageSuggest() {
+        categoriesALiked = new ArrayList<>();
+        categoriesBLiked = new ArrayList<>();
+        commonCategories = new ArrayList<>();
+        messageSuggests = new ArrayList<>();
+        existCombination = new ArrayList<>();
+    }
+
+    public MessageSuggest(User u1, User u2) {
+        userAInterests = u1.getInterests().stream().map(Interest::getName).collect(Collectors.toList());
+        userBInterests = u2.getInterests().stream().map(Interest::getName).collect(Collectors.toList());
         categoriesALiked = new ArrayList<>();
         categoriesBLiked = new ArrayList<>();
         commonCategories = new ArrayList<>();
