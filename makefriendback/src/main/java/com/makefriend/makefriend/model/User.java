@@ -176,4 +176,12 @@ public class User implements UserDetails {
     public void setReceivedFriendRequests(Set<FriendRequest> receivedFriendRequests) {
         this.receivedFriendRequests = receivedFriendRequests;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

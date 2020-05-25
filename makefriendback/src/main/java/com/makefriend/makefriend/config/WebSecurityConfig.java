@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		/*http
+		http
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authorizeRequests().antMatchers("/auth/**").permitAll()
 				.antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.POST,"/h2/**").permitAll()
 				.antMatchers(HttpMethod.GET,"/**").permitAll()
 				.antMatchers(HttpMethod.OPTIONS, "/h2/**").permitAll()
-				.anyRequest().authenticated().and().httpBasic();*/
+				.anyRequest().authenticated().and().httpBasic();
 
 
 	}
@@ -69,6 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers(HttpMethod.GET, "/api/**");// Change this after implementing certificates
 		web.ignoring().antMatchers(HttpMethod.POST, "/h2/**");// Change this after implementing certificates
 		web.ignoring().antMatchers(HttpMethod.POST, "/api/**");// Change this after implementing certificates
+		web.ignoring().antMatchers(HttpMethod.POST, "/auth/**");// Change this after implementing certificates
 
 	}
 

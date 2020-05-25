@@ -1,6 +1,7 @@
-INSERT INTO user (`id`, `email`, `first_name`, `last_name`, `password`, `username`) VALUES ('1', 'pera@pera.com', 'pera', 'peric', 'pera', 'peric');
-INSERT INTO user (`id`, `email`, `first_name`, `last_name`, `password`, `username`) VALUES ('2', 'mika@mika.com', 'mika', 'mikic', 'mika', 'mika');
-INSERT INTO user (`id`, `email`, `first_name`, `last_name`, `password`, `username`) VALUES ('3', 'laza@laza.com', 'laza', 'lazic', 'laza', 'laza');
+INSERT INTO user (`id`, `email`, `first_name`, `last_name`, `password`, `username`) VALUES ('1', 'pera@pera.com', 'pera', 'peric', '$2a$10$PxvKsblywCsPRpmccc2Id.Vf5bMDvXfRMxUhmhhAL1gxXLcWDAhIa', 'peric');
+INSERT INTO user (`id`, `email`, `first_name`, `last_name`, `password`, `username`) VALUES ('2', 'mika@mika.com', 'mika', 'mikic', '$2a$10$PxvKsblywCsPRpmccc2Id.Vf5bMDvXfRMxUhmhhAL1gxXLcWDAhIa', 'mika');
+INSERT INTO user (`id`, `email`, `first_name`, `last_name`, `password`, `username`) VALUES ('3', 'laza@laza.com', 'laza', 'lazic', '$2a$10$PxvKsblywCsPRpmccc2Id.Vf5bMDvXfRMxUhmhhAL1gxXLcWDAhIa', 'laza');
+INSERT INTO authority (`id`, `name`) VALUES ('1', 'USER');
 
 INSERT INTO interest_category (`id`, `name`) VALUES ('1', 'SPORT');
 INSERT INTO interest_category (`id`, `name`) VALUES ('2', 'TVMOVIE');
