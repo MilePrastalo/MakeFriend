@@ -12,9 +12,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.example.makefriendandroid.MainActivity
 
 import com.example.makefriendandroid.R
 import com.example.makefriendandroid.model.RegistrationForm
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.registration_fragment.*
 
 class RegistrationFragment : Fragment() {
@@ -57,15 +59,17 @@ class RegistrationFragment : Fragment() {
                 Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
             }
         })
+        val mainActivity: MainActivity = activity as MainActivity
+        mainActivity.bottomNavigationView.visibility = View.GONE
     }
 
     private fun register() {
-        val firstName = reg_first_name_edit_text.text.toString()
-        val lastName = reg_last_name_edit_text.text.toString()
+        val firstName = prof_first_name_edit_text.text.toString()
+        val lastName = prof_last_name_edit_text.text.toString()
         val username = reg_username_edit_text.text.toString()
         val password = reg_password_edit_text.text.toString()
         val confirmedPassword = reg_confirm_password_edit_text.text.toString()
-        val email = reg_email_edit_text.text.toString()
+        val email = prof_email_edit_text.text.toString()
         if (password == confirmedPassword) {
             val form =
                 RegistrationForm(firstName, lastName, username, password, confirmedPassword, email)

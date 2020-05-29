@@ -1,4 +1,4 @@
 package com.example.makefriendandroid.model
 
-class Interest(id: Long, name: String) {
+class Interest(val id: Long, val name: String) {
 }

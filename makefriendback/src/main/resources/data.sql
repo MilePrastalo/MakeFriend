@@ -23,6 +23,22 @@ INSERT INTO interest (`id`, `name`, `category_id`) VALUES ('12', 'Rock', '4');
 INSERT INTO interest (`id`, `name`, `category_id`) VALUES ('13', 'Metal', '4');
 INSERT INTO interest (`id`, `name`, `category_id`) VALUES ('14', 'Pop', '4');
 
+INSERT INTO interest_category_interests (`interest_category_id`, `interests_id`) VALUES ('1', '1');
+INSERT INTO interest_category_interests (`interest_category_id`, `interests_id`) VALUES ('1', '2');
+INSERT INTO interest_category_interests (`interest_category_id`, `interests_id`) VALUES ('1', '3');
+INSERT INTO interest_category_interests (`interest_category_id`, `interests_id`) VALUES ('2', '4');
+INSERT INTO interest_category_interests (`interest_category_id`, `interests_id`) VALUES ('2', '5');
+INSERT INTO interest_category_interests (`interest_category_id`, `interests_id`) VALUES ('3', '6');
+INSERT INTO interest_category_interests (`interest_category_id`, `interests_id`) VALUES ('3', '7');
+INSERT INTO interest_category_interests (`interest_category_id`, `interests_id`) VALUES ('3', '8');
+INSERT INTO interest_category_interests (`interest_category_id`, `interests_id`) VALUES ('3', '9');
+INSERT INTO interest_category_interests (`interest_category_id`, `interests_id`) VALUES ('3', '10');
+INSERT INTO interest_category_interests (`interest_category_id`, `interests_id`) VALUES ('4', '11');
+INSERT INTO interest_category_interests (`interest_category_id`, `interests_id`) VALUES ('4', '12');
+INSERT INTO interest_category_interests (`interest_category_id`, `interests_id`) VALUES ('4', '13');
+INSERT INTO interest_category_interests (`interest_category_id`, `interests_id`) VALUES ('4', '14');
+
+
 INSERT INTO user_interests (`user_id`, `interests_id`) VALUES ('1', '1');
 INSERT INTO user_interests (`user_id`, `interests_id`) VALUES ('1', '2');
 INSERT INTO user_interests (`user_id`, `interests_id`) VALUES ('1', '3');

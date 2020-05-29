@@ -12,4 +12,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u.friends from User u where u.id = :id")
     List<User> findFriendsById(Long id);
+
 }

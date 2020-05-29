@@ -4,19 +4,16 @@ import com.makefriend.makefriend.model.FriendRequest;
 
 public class FriendRequestDTO {
     private Long id;
-    private Long sender;
-    private Long receiver;
+    private String sender;
 
-    public FriendRequestDTO(Long id, Long sender, Long receiver) {
+    public FriendRequestDTO(Long id, String sender, Long receiver) {
         this.id = id;
         this.sender = sender;
-        this.receiver = receiver;
     }
 
     public FriendRequestDTO(FriendRequest request) {
         this.id = request.getId();
-        this.sender = request.getSender().getId();
-        this.receiver = request.getReceiver().getId();
+        this.sender = request.getSender().getFirstName() + " " + request.getSender().getLastName();
     }
 
     public FriendRequestDTO() {
@@ -30,19 +27,11 @@ public class FriendRequestDTO {
         this.id = id;
     }
 
-    public Long getSender() {
+    public String getSender() {
         return sender;
     }
 
-    public void setSender(Long sender) {
+    public void setSender(String sender) {
         this.sender = sender;
-    }
-
-    public Long getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(Long receiver) {
-        this.receiver = receiver;
     }
 }

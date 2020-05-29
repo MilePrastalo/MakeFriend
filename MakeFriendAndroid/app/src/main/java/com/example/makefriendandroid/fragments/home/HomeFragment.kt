@@ -10,8 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.makefriendandroid.Adapters.FriendSuggestionsAdapter
+import com.example.makefriendandroid.MainActivity
 
 import com.example.makefriendandroid.R
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.home_fragment.*
 
 class HomeFragment : Fragment() {
@@ -39,8 +41,14 @@ class HomeFragment : Fragment() {
         rec.layoutManager = GridLayoutManager(context,3)
         rec.adapter = FriendSuggestionsAdapter(ArrayList())
         viewModel.suggested.observe(viewLifecycleOwner, Observer {
-            rec.adapter = FriendSuggestionsAdapter(it.suggestions)
+            rec.adapter = FriendSuggestionsAdapter(it)
         })
+        val mainActivity: MainActivity = activity as MainActivity
+        mainActivity.bottomNavigationView.visibility = View.VISIBLE
+        viewModel.name.observe(viewLifecycleOwner, Observer {
+            home_name_text.text = it;
+        })
+        viewModel.getProfileDetails()
     }
 
 }

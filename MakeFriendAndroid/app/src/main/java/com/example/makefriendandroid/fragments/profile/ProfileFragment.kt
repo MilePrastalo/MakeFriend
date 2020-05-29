@@ -6,8 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 
 import com.example.makefriendandroid.R
+import kotlinx.android.synthetic.main.profile_fragment.*
+import kotlinx.android.synthetic.main.profile_fragment.prof_email_edit_text
+import kotlinx.android.synthetic.main.profile_fragment.prof_first_name_edit_text
+import kotlinx.android.synthetic.main.profile_fragment.prof_last_name_edit_text
+import kotlinx.android.synthetic.main.registration_fragment.*
 
 class ProfileFragment : Fragment() {
 
@@ -27,7 +34,18 @@ class ProfileFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
-        // TODO: Use the ViewModel
+        to_traits_button.setOnClickListener{
+            viewModel.saveProfileInfo()
+            findNavController().navigate(R.id.action_profileFragment_to_profileTraitsFragment)
+        }
+        viewModel.getProfileInfo()
+        viewModel.profileDetails.observe(viewLifecycleOwner, Observer {
+            prof_first_name_edit_text.setText(it.firstName)
+            prof_last_name_edit_text.setText(it.lastName)
+            prof_email_edit_text.setText(it.email)
+        })
+
     }
+
 
 }

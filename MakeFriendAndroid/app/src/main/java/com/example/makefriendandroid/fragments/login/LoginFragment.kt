@@ -1,5 +1,6 @@
 package com.example.makefriendandroid.fragments.login
 
+import android.app.Activity
 import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -7,13 +8,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.example.makefriendandroid.MainActivity
 
 import com.example.makefriendandroid.R
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.login_fragment.*
 
 class LoginFragment : Fragment() {
@@ -59,6 +63,12 @@ class LoginFragment : Fragment() {
                     putString("password", com.example.makefriendandroid.service.AppData.password)
                     commit()
                 }
+                val imm =requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                var view = requireActivity().currentFocus
+                if (view == null) {
+                    view = View(activity);
+                }
+                imm.hideSoftInputFromWindow(view.windowToken,0)
                 this.findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
             } else {
                 Toast.makeText(context, "Wrong credentials", Toast.LENGTH_SHORT).show()
@@ -71,6 +81,8 @@ class LoginFragment : Fragment() {
         if (userName != "" && password != "") {
             viewModel.login(userName!!, password!!)
         }
+        val mainActivity:MainActivity = activity as MainActivity
+        mainActivity.bottomNavigationView.visibility = View.GONE
     }
 
     private fun login() {

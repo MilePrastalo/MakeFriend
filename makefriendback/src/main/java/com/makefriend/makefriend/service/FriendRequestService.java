@@ -1,9 +1,13 @@
 package com.makefriend.makefriend.service;
 
 import com.makefriend.makefriend.dto.FriendRequestDTO;
+import com.makefriend.makefriend.dto.SendFriendRequestDTO;
 import com.makefriend.makefriend.model.FriendRequest;
 import com.makefriend.makefriend.model.User;
 import com.makefriend.makefriend.repository.FriendRequestRepository;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,19 +22,19 @@ public class FriendRequestService {
         this.friendRequestRepository = friendRequestRepository;
         this.userService = userService;
     }
-    public List<User> getFriends(Long userid){
-        User user = userService.findOne(userid);
+    public List<User> getFriends(){
+        User user = userService.getUserFromAuthentication();
         return new ArrayList<>(user.getFriends());
     }
 
-    public List<FriendRequest> getFriendRequests(Long userId) {
-        User user = userService.findOne(userId);
+    public List<FriendRequest> getFriendRequests() {
+        User user = userService.getUserFromAuthentication();
         return new ArrayList<>(user.getReceivedFriendRequests());
     }
 
-    public void sendFriendRequest(FriendRequestDTO dto) {
-        User sender = userService.findOne(dto.getSender());
-        User receiver = userService.findOne(dto.getReceiver());
+    public void sendFriendRequest(SendFriendRequestDTO dto) {
+        User sender = userService.findOne(dto.getSenderId());
+        User receiver = userService.findOne(dto.getReviewerId());
         FriendRequest request = new FriendRequest();
         request.setReceiver(receiver);
         request.setSender(sender);

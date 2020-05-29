@@ -1,4 +1,4 @@
 package com.example.makefriendandroid.model
 
-class InterestCategory(id: Long, name: String, interests: List<Interest>) {
+class InterestCategory(val id: Long, val name: String, val interests: List<Interest>) {
 }

@@ -51,12 +51,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authorizeRequests().antMatchers("/auth/**").permitAll()
-				.antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
-				.antMatchers(HttpMethod.GET,"/api/**").permitAll()
-				.antMatchers(HttpMethod.GET,"/h2/**").permitAll()
-				.antMatchers(HttpMethod.POST,"/h2/**").permitAll()
-				.antMatchers(HttpMethod.GET,"/**").permitAll()
-				.antMatchers(HttpMethod.OPTIONS, "/h2/**").permitAll()
 				.anyRequest().authenticated().and().httpBasic();
 
 
@@ -65,11 +59,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) {
 		// TokenAuthenticationFilter will ignore the following
-		web.ignoring().antMatchers(HttpMethod.GET, "/h2/**");// Change this after implementing certificates
-		web.ignoring().antMatchers(HttpMethod.GET, "/api/**");// Change this after implementing certificates
-		web.ignoring().antMatchers(HttpMethod.POST, "/h2/**");// Change this after implementing certificates
-		web.ignoring().antMatchers(HttpMethod.POST, "/api/**");// Change this after implementing certificates
-		web.ignoring().antMatchers(HttpMethod.POST, "/auth/**");// Change this after implementing certificates
+		web.ignoring().antMatchers(HttpMethod.POST, "/auth/login");
+		web.ignoring().antMatchers(HttpMethod.POST, "/auth/register");
 
 	}
 

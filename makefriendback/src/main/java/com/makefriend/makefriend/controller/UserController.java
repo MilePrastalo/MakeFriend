@@ -8,6 +8,9 @@ import com.makefriend.makefriend.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,45 +27,85 @@ public class UserController {
     }
 
 
-    @GetMapping(value = "{userId}")
-    public ResponseEntity<ProfileDetailsDTO> getProfileDetails(@PathVariable("userId") Long userId) {
-        User user = userService.findOne(userId);
+    @GetMapping(value = "")
+    public ResponseEntity<ProfileDetailsDTO> getProfileDetails() {
+        String username = "";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            username = authentication.getName();
+        } else {
+            return null;
+        }
+        User user = userService.findOneByUsename(username);
         ProfileDetailsDTO dto = new ProfileDetailsDTO(user);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProfileDetailsDTO> setProfileDetails(@RequestBody ProfileDetailsDTO profileDetailsDTO) {
-        User user = userService.setUserDetails(profileDetailsDTO.getId(), profileDetailsDTO);
+        String username = "";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            username = authentication.getName();
+        } else {
+            return null;
+        }
+        User user = userService.setUserDetails(username, profileDetailsDTO);
         return new ResponseEntity<>(new ProfileDetailsDTO(user), HttpStatus.OK);
     }
 
-    @GetMapping(value = "{userId}/interests")
-    public ResponseEntity<UserInterestsDTO> getUserInterests(@PathVariable("userId") Long userId) {
-        List<Interest> interests = userService.getInterests(userId);
+    @GetMapping(value = "interests")
+    public ResponseEntity<List<InterestDTO>> getUserInterests() {
+        String username = "";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            username = authentication.getName();
+        } else {
+            return null;
+        }
+        List<Interest> interests = userService.getInterests(username);
         List<InterestDTO> interestDTOS = interests.stream().map(InterestDTO::new).collect(Collectors.toList());
-        UserInterestsDTO dto = new UserInterestsDTO(interestDTOS);
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+        return new ResponseEntity<>(interestDTOS, HttpStatus.OK);
     }
 
-    @PostMapping(value = "{userId}/interests", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProfileDetailsDTO> setUserInterests(@PathVariable("userId") Long userId, @RequestBody UserInterestsDTO dto) {
-        User user = userService.setInterests(userId, dto);
+ /*   @PostMapping(value = "interests", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProfileDetailsDTO> setUserInterests(@RequestBody UserInterestsDTO dto) {
+        String username = "";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            username = authentication.getName();
+        } else {
+            return null;
+        }
+        User user = userService.setInterests(username, dto);
         ProfileDetailsDTO profileDetailsDTO = new ProfileDetailsDTO(user);
         return new ResponseEntity<>(profileDetailsDTO, HttpStatus.OK);
+    }*/
+
+    @GetMapping(value = "traits")
+    public ResponseEntity<List<UserTraitDTO>> getTraits() {
+        String username = "";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            username = authentication.getName();
+        } else {
+            return null;
+        }
+        List<UserTrait> traits = userService.getTraits(username);
+        List<UserTraitDTO> dtoTraits = traits.stream().map(UserTraitDTO::new).collect(Collectors.toList());
+        return new ResponseEntity<>(dtoTraits, HttpStatus.OK);
     }
 
-    @GetMapping(value = "{userId}/traits")
-    public ResponseEntity<TraitsDTO> getTraits(@PathVariable("userId") Long userId) {
-        List<UserTrait> traits = userService.getTraits(userId);
-        List<TraitDTO> dtoTraits = traits.stream().map(userTrait -> new TraitDTO(userTrait.getTrait())).collect(Collectors.toList());
-        TraitsDTO dto = new TraitsDTO(dtoTraits);
-        return new ResponseEntity<>(dto, HttpStatus.OK);
-    }
-
-    @PostMapping(value = "{userId}/traits", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProfileDetailsDTO> setTraits(@PathVariable("userId") Long userId, @RequestBody TraitsDTO traitsDTO) {
-        User user = userService.setTraits(userId, traitsDTO);
+    @PostMapping(value = "traits", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProfileDetailsDTO> setTraits(@RequestBody List<UserTraitDTO> traitsDTO) {
+        String username = "";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            username = authentication.getName();
+        } else {
+            return null;
+        }
+        User user = userService.setTraits(username, traitsDTO);
         ProfileDetailsDTO dto = new ProfileDetailsDTO(user);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }

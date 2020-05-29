@@ -1,4 +1,4 @@
 package com.example.makefriendandroid.model
 
-class MessageHead(name: String, imagePath: String, lastText: String) {
+class MessageHead(val name: String,val imagePath: String,val lastText: String) {
 }

@@ -1,6 +1,7 @@
 package com.makefriend.makefriend.dto;
 
 import com.makefriend.makefriend.model.Trait;
+import com.makefriend.makefriend.model.UserTrait;
 
 public class TraitDTO {
     private Long id;
@@ -29,4 +30,5 @@ public class TraitDTO {
     public void setName(String name) {
         this.name = name;
     }
+
 }

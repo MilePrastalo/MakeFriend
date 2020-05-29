@@ -47,5 +47,38 @@
         android:id="@+id/chatFragment"
         android:name="com.example.makefriendandroid.fragments.messages.ChatFragment"
         android:label="chat_fragment"
-        tools:layout="@layout/chat_fragment" />
+        tools:layout="@layout/chat_fragment" >
+        <argument
+            android:name="friendId"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.makefriendandroid.fragments.profile.ProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/profile_fragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_profileTraitsFragment"
+            app:destination="@id/profileTraitsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileTraitsFragment"
+        android:name="com.example.makefriendandroid.fragments.profile.ProfileTraitsFragment"
+        android:label="profile_traits_fragment"
+        tools:layout="@layout/profile_traits_fragment" >
+        <action
+            android:id="@+id/action_profileTraitsFragment_to_interestsFragment"
+            app:destination="@id/interestsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/interestsFragment"
+        android:name="com.example.makefriendandroid.fragments.profile.InterestsFragment"
+        android:label="interests_fragment"
+        tools:layout="@layout/interests_fragment" />
+    <fragment
+        android:id="@+id/friendsFragment"
+        android:name="com.example.makefriendandroid.fragments.friends.FriendsFragment"
+        android:label="friends_fragment"
+        tools:layout="@layout/friends_fragment" />
 </navigation>

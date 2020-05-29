@@ -1,9 +1,7 @@
 package com.makefriend.makefriend.controller;
 
 import com.makefriend.makefriend.dto.InterestCategoryDTO;
-import com.makefriend.makefriend.dto.InterestsDTO;
 import com.makefriend.makefriend.dto.TraitDTO;
-import com.makefriend.makefriend.dto.TraitsDTO;
 import com.makefriend.makefriend.model.InterestCategory;
 import com.makefriend.makefriend.model.Trait;
 import com.makefriend.makefriend.service.InterestCategoryService;
@@ -31,12 +29,10 @@ public class TraitsController {
     }
 
     @GetMapping("api/traits")
-    public ResponseEntity<TraitsDTO> getAllTraits() {
+    public ResponseEntity<List<TraitDTO>> getAllTraits() {
         List<Trait> traits = traitService.findAll();
         List<TraitDTO> traitsDTOList = traits.stream().map(TraitDTO::new).collect(Collectors.toList());
-        TraitsDTO traitsDTO = new TraitsDTO();
-        traitsDTO.setTraits(traitsDTOList);
-        return new ResponseEntity<>(traitsDTO, HttpStatus.OK);
+        return new ResponseEntity<>(traitsDTOList, HttpStatus.OK);
     }
 
     @PostMapping("api/traits")
@@ -45,11 +41,10 @@ public class TraitsController {
     }
 
     @GetMapping("api/interests")
-    public ResponseEntity<InterestsDTO> getAllInterests() {
+    public ResponseEntity<List<InterestCategoryDTO>> getAllInterests() {
         List<InterestCategory> interests = interestCategoryService.findAll();
         List<InterestCategoryDTO> interestcategorydto = interests.stream().map(InterestCategoryDTO::new).collect(Collectors.toList());
-        InterestsDTO interestsDTO = new InterestsDTO(interestcategorydto);
-        return new ResponseEntity<>(interestsDTO, HttpStatus.OK);
+        return new ResponseEntity<>(interestcategorydto, HttpStatus.OK);
     }
 
     @PostMapping("api/interests")

@@ -2,11 +2,11 @@ package com.makefriend.makefriend.model;
 
 public class MessageFromRule {
     private String text;
-    private float strenght;
+    private float strength;
 
-    public MessageFromRule(String text, float strenght) {
+    public MessageFromRule(String text, float strength) {
         this.text = text;
-        this.strenght = strenght;
+        this.strength = strength;
     }
 
     public String getText() {
@@ -17,11 +17,11 @@ public class MessageFromRule {
         this.text = text;
     }
 
-    public float getStrenght() {
-        return strenght;
+    public float getStrength() {
+        return strength;
     }
 
-    public void setStrenght(float strenght) {
-        this.strenght = strenght;
+    public void setStrength(float strength) {
+        this.strength = strength;
     }
 }

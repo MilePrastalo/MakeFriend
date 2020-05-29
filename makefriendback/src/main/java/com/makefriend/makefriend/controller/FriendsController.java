@@ -1,6 +1,9 @@
 package com.makefriend.makefriend.controller;
 
-import com.makefriend.makefriend.dto.*;
+import com.makefriend.makefriend.dto.FriendRequestDTO;
+import com.makefriend.makefriend.dto.FriendSuggestionDTO;
+import com.makefriend.makefriend.dto.SendFriendRequestDTO;
+import com.makefriend.makefriend.dto.UserBasicDto;
 import com.makefriend.makefriend.model.FriendMatch;
 import com.makefriend.makefriend.model.FriendRequest;
 import com.makefriend.makefriend.model.User;
@@ -24,7 +27,7 @@ import java.util.stream.Collectors;
 public class FriendsController {
 
     private final FriendRequestService friendRequestService;
-    private KieContainer kieContainer;
+    private final KieContainer kieContainer;
     private InterestService interestService;
     private InterestCategoryService interestCategoryService;
     private UserService userService;
@@ -38,15 +41,15 @@ public class FriendsController {
         this.userService = userService;
     }
 
-    @GetMapping("suggested/{userId}")
-    public ResponseEntity<FriendSuggestionsDTO> getSuggestedFriend(@PathVariable("userId") Long userId) {
+    @GetMapping("suggested")
+    public ResponseEntity<List<FriendSuggestionDTO>> getSuggestedFriend() {
+        User user = userService.getUserFromAuthentication();
         List<FriendSuggestionDTO> suggestions = new ArrayList<>();
-        FriendSuggestionsDTO dto = new FriendSuggestionsDTO(suggestions);
 
         List<User> users = userService.findAll();
         List<FriendMatch> friendMatchList = new ArrayList<>();
 
-        User userQuerry = users.stream().filter(user -> user.getId().equals(userId)).findFirst().get();
+        User userQuerry = users.stream().filter(u -> u.getId().equals(user.getId())).findFirst().get();
 
         for (User u : users) {
             if (u == userQuerry) {
@@ -71,37 +74,38 @@ public class FriendsController {
 
         //Sort
 
-        for (int i = 0; i < dto.getSuggestions().size() - 1; i++) {
-            for (int j = i + 1; j < dto.getSuggestions().size(); j++) {
-                if (dto.getSuggestions().get(j).getSimmilar() > dto.getSuggestions().get(i).getSimmilar()) {
-                    FriendSuggestionDTO temp = dto.getSuggestions().get(j);
-                    dto.getSuggestions().set(j, dto.getSuggestions().get(i));
-                    dto.getSuggestions().set(i, temp);
+        for (int i = 0; i < suggestions.size() - 1; i++) {
+            for (int j = i + 1; j < suggestions.size(); j++) {
+                if (suggestions.get(j).getSimmilar() > suggestions.get(i).getSimmilar()) {
+                    FriendSuggestionDTO temp = suggestions.get(j);
+                    suggestions.set(j, suggestions.get(i));
+                    suggestions.set(i, temp);
                 }
             }
         }
         //limit to 6
         ArrayList<FriendSuggestionDTO> newList = new ArrayList<>();
-        for(int i=0;i<6;i++){
-            if(dto.getSuggestions().size()<=i){
+        for (int i = 0; i < 6; i++) {
+            if (suggestions.size() <= i) {
                 break;
             }
-            newList.add(dto.getSuggestions().get(i));
+            newList.add(suggestions.get(i));
         }
-        dto.setSuggestions(newList);
 
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+        return new ResponseEntity<>(newList, HttpStatus.OK);
     }
 
-    @GetMapping("all/{userId}")
-    public ResponseEntity<UsersBasicDTO> getAllFriends(@PathVariable("userId") Long userId) {
-        List<User> friends = friendRequestService.getFriends(userId);
+    @GetMapping("all")
+    public ResponseEntity<List<UserBasicDto>> getAllFriends() {
+        String username = "";
+
+        List<User> friends = friendRequestService.getFriends();
         List<UserBasicDto> basicFriends = friends.stream().map(UserBasicDto::new).collect(Collectors.toList());
-        return new ResponseEntity<>(new UsersBasicDTO(basicFriends), HttpStatus.OK);
+        return new ResponseEntity<>(basicFriends, HttpStatus.OK);
     }
 
-    @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> sendFriendRequest(@RequestBody FriendRequestDTO dto) {
+   @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> sendFriendRequest(@RequestBody SendFriendRequestDTO dto) {
         friendRequestService.sendFriendRequest(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -118,11 +122,12 @@ public class FriendsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("requests/{userId}")
-    public ResponseEntity<FriendRequestsDTO> getFriendRequests(@PathVariable("userId") Long userId) {
-        List<FriendRequest> requests = friendRequestService.getFriendRequests(userId);
+    @GetMapping("requests")
+    public ResponseEntity<List<FriendRequestDTO>> getFriendRequests() {
+        List<FriendRequest> requests = friendRequestService.getFriendRequests();
         List<FriendRequestDTO> requestsDTO = requests.stream().map(FriendRequestDTO::new).collect(Collectors.toList());
-        return new ResponseEntity<>(new FriendRequestsDTO(requestsDTO), HttpStatus.OK);
+        return new ResponseEntity<>(requestsDTO, HttpStatus.OK);
     }
+
 
 }

@@ -1,8 +1,8 @@
 package com.example.makefriendandroid.service
 
 import com.example.makefriendandroid.model.Message
-import com.example.makefriendandroid.model.lists.MessageHeadList
-import com.example.makefriendandroid.model.lists.Messages
+import com.example.makefriendandroid.model.MessageHead
+import com.example.makefriendandroid.model.SuggestedMessage
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -11,21 +11,19 @@ import retrofit2.http.Path
 
 interface MessagesService {
 
-    @GET("api/messages/{userId}")
-    fun getMessages(@Path("userId") userId: Long): Call<MessageHeadList>
+    @GET("api/messages/")
+    fun getMessages(): Call<List<MessageHead>>
 
-    @GET("api/messages/{userId}/{friendId}")
+    @GET("api/messages/{friendId}")
     fun getChatMessages(
-        @Path("userId") userId: Long,
         @Path("friendId") friendId: Long
-    ): Call<Messages>
+    ): Call<List<Message>>
 
     @POST("api/messages")
     fun sendChatMessage(@Body message: Message): Call<Message>
 
-    @GET("api/messages/suggested/{userId}/{friendId}")
+    @GET("api/messages/suggested/{friendId}")
     fun getSuggestedMessage(
-        @Path("userId") userId: Long,
         @Path("friendId") friendId: Long
-    ): Call<Void>
+    ): Call<List<SuggestedMessage>>
 }
