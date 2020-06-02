@@ -21,4 +21,7 @@ public class TraitService {
     public List<Trait> findAll(){
         return traitRepository.findAll();
     }
+    public Trait findByName(String name){
+        return traitRepository.findByName(name);
+    }
 }

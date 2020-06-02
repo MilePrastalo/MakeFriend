@@ -12,11 +12,21 @@ import retrofit2.Response
 
 class ProfileViewModel : ViewModel() {
    val profileDetails = MutableLiveData<ProfileDetails>()
+   val service:UserService = RetrofitService.get_retrofit().create(UserService::class.java)
    fun saveProfileInfo(){
+      service.setProfileDetails(profileDetails.value!!).enqueue(object : Callback<ProfileDetails>{
+         override fun onFailure(call: Call<ProfileDetails>, t: Throwable) {
+            Log.i("ProfileViewModel",t.message)
+         }
 
+         override fun onResponse(call: Call<ProfileDetails>, response: Response<ProfileDetails>) {
+            Log.i("ProfileViewModel",response.message())
+         }
+
+      })
    }
    fun getProfileInfo(){
-      val service = RetrofitService.get_retrofit().create(UserService::class.java)
+
       service.getProfileDetails().enqueue(object :Callback<ProfileDetails>{
          override fun onFailure(call: Call<ProfileDetails>, t: Throwable) {
             Log.i("ProfileViewModel",t.message)

@@ -1,11 +1,11 @@
 package com.example.makefriendandroid.model
 
 class ProfileDetails(
-    val id: Long,
-    val username: String,
-    val firstName: String,
-    val lastName: String,
-    val email: String
+    var id: Long,
+    var username: String,
+    var firstName: String,
+    var lastName: String,
+    var email: String
 ) {
 
 }

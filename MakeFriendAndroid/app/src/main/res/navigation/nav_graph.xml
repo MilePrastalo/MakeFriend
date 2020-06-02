@@ -70,12 +70,22 @@
         <action
             android:id="@+id/action_profileTraitsFragment_to_interestsFragment"
             app:destination="@id/interestsFragment" />
+        <action
+            android:id="@+id/action_profileTraitsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/interestsFragment"
         android:name="com.example.makefriendandroid.fragments.profile.InterestsFragment"
         android:label="interests_fragment"
-        tools:layout="@layout/interests_fragment" />
+        tools:layout="@layout/interests_fragment" >
+        <action
+            android:id="@+id/action_interestsFragment_to_profileTraitsFragment"
+            app:destination="@id/profileTraitsFragment" />
+        <action
+            android:id="@+id/action_interestsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/friendsFragment"
         android:name="com.example.makefriendandroid.fragments.friends.FriendsFragment"

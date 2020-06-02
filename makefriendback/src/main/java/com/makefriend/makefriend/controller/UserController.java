@@ -68,8 +68,8 @@ public class UserController {
         return new ResponseEntity<>(interestDTOS, HttpStatus.OK);
     }
 
- /*   @PostMapping(value = "interests", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProfileDetailsDTO> setUserInterests(@RequestBody UserInterestsDTO dto) {
+    @PostMapping(value = "interests", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProfileDetailsDTO> setUserInterests(@RequestBody List<InterestDTO> dto) {
         String username = "";
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -80,7 +80,7 @@ public class UserController {
         User user = userService.setInterests(username, dto);
         ProfileDetailsDTO profileDetailsDTO = new ProfileDetailsDTO(user);
         return new ResponseEntity<>(profileDetailsDTO, HttpStatus.OK);
-    }*/
+    }
 
     @GetMapping(value = "traits")
     public ResponseEntity<List<UserTraitDTO>> getTraits() {

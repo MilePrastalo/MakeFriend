@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.makefriendandroid.Adapters.InterestCategoryAdapter
 
@@ -42,6 +43,10 @@ class InterestsFragment : Fragment() {
                 interests_category_recycler.adapter = adapter
             }
         })
+        finish_button.setOnClickListener {
+            viewModel.saveInterests()
+            findNavController().navigate(R.id.action_interestsFragment_to_homeFragment)
+        }
 
     }
 

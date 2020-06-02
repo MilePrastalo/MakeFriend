@@ -15,4 +15,8 @@ public class InterestService {
     public Interest findOne(Long interestId) {
         return interestRepository.findById(interestId).get();
     }
+
+    public Interest findByName(String name){
+        return interestRepository.findByName(name);
+    }
 }

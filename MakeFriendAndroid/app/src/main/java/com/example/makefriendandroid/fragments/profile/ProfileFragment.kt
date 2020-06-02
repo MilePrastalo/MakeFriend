@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 
 import com.example.makefriendandroid.R
+import com.example.makefriendandroid.model.ProfileDetails
 import kotlinx.android.synthetic.main.profile_fragment.*
 import kotlinx.android.synthetic.main.profile_fragment.prof_email_edit_text
 import kotlinx.android.synthetic.main.profile_fragment.prof_first_name_edit_text
@@ -23,7 +24,6 @@ class ProfileFragment : Fragment() {
     }
 
     private lateinit var viewModel: ProfileViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,9 +35,9 @@ class ProfileFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
         to_traits_button.setOnClickListener{
-            viewModel.saveProfileInfo()
             findNavController().navigate(R.id.action_profileFragment_to_profileTraitsFragment)
         }
+
         viewModel.getProfileInfo()
         viewModel.profileDetails.observe(viewLifecycleOwner, Observer {
             prof_first_name_edit_text.setText(it.firstName)
@@ -45,6 +45,12 @@ class ProfileFragment : Fragment() {
             prof_email_edit_text.setText(it.email)
         })
 
+        save_button.setOnClickListener {
+            viewModel.profileDetails.value?.firstName = prof_first_name_edit_text.text.toString()
+            viewModel.profileDetails.value?.lastName = prof_last_name_edit_text.text.toString()
+            viewModel.profileDetails.value?.email = prof_email_edit_text.text.toString()
+            viewModel.saveProfileInfo()
+        }
     }
 
 

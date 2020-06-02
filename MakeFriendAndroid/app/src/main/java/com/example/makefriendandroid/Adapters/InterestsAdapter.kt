@@ -25,9 +25,21 @@ class InterestsAdapter(val interests: List<Interest>, val userInterests: List<In
 
     class ViewHolder(val view: View,val userInterests: List<Interest>) : RecyclerView.ViewHolder(view) {
         var interestText: TextView
-
+        lateinit var interest:Interest
         init {
             interestText = view.findViewById(R.id.interest_text_view)
+            interestText.setOnClickListener {
+                val filtered = userInterests.filter {
+                    it.name == interestText.text.toString()
+                }
+                if (filtered.isNotEmpty()){
+                    (userInterests as MutableList).remove(filtered[0])
+                    interestText.setBackgroundColor(Color.WHITE)
+                }else{
+                    (userInterests as MutableList).add(interest)
+                    interestText.setBackgroundColor(Color.GREEN)
+                }
+            }
         }
 
         fun bind(data: Interest) {
@@ -43,8 +55,8 @@ class InterestsAdapter(val interests: List<Interest>, val userInterests: List<In
                 interestText.setBackgroundColor(Color.GREEN)
             }else{
                 interestText.setBackgroundColor(Color.WHITE)
-
             }
+            interest = data
         }
 
     }

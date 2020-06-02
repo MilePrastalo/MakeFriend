@@ -37,6 +37,9 @@ class ProfileTraitsFragment : Fragment() {
         next_button.setOnClickListener {
             findNavController().navigate(R.id.action_profileTraitsFragment_to_interestsFragment)
         }
+        previous_button.setOnClickListener {
+            findNavController().navigate(R.id.action_profileTraitsFragment_to_profileFragment)
+        }
         viewModel.traits.observe(viewLifecycleOwner, Observer {
             val adapter = TraitsAdapter(viewModel.traits.value!!,viewModel.userTraits.value!!)
             traits_recycler_view.adapter = adapter
@@ -48,6 +51,10 @@ class ProfileTraitsFragment : Fragment() {
         })
         viewModel.getAllTraits()
         viewModel.getUserTraits()
+
+        save_button.setOnClickListener {
+            viewModel.saveTraits()
+        }
     }
 
 }

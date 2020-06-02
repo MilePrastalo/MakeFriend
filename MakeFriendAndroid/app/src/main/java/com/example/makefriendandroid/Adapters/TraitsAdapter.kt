@@ -33,6 +33,28 @@ class TraitsAdapter(val traits:List<Trait>, val userTraits:List<UserTrait>):Recy
             traitName = itemView.findViewById(R.id.trait_name)
             yes = itemView.findViewById(R.id.yes_radio)
             no = itemView.findViewById(R.id.no_radio)
+            yes.setOnClickListener{
+                val trait = userTraits.find {
+                    it.name == traitName.text
+                }
+                if(trait != null){
+                    trait.value = true
+                }else{
+                    val newTrait = UserTrait(null,traitName.text.toString(),true)
+                    (userTraits as MutableList).add(newTrait)
+                }
+            }
+            no.setOnClickListener {
+                val trait = userTraits.find {
+                    it.name == traitName.text
+                }
+                if(trait != null){
+                    trait.value = false
+                }else{
+                    val newTrait = UserTrait(null,traitName.text.toString(),false)
+                    (userTraits as MutableList).add(newTrait)
+                }
+            }
         }
         fun bind(trait:Trait){
             traitName.text = trait.name

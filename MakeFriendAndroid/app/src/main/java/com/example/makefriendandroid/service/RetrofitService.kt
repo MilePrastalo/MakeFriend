@@ -11,7 +11,7 @@ class RetrofitService {
             if (retrofit == null) {
                 val okHttp = OkHttpClient.Builder().addInterceptor(SupportInterceptor())
                 retrofit = Retrofit.Builder()
-                    .baseUrl("http://192.168.1.15:8080/")
+                    .baseUrl("http://192.168.1.14:8080/")
                     //.baseUrl("http://10.0.2.2:8080/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(okHttp.build())

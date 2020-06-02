@@ -8,10 +8,10 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface UserService {
-    @GET("api/profile/")
+    @GET("api/profile")
     fun getProfileDetails(): Call<ProfileDetails>
 
-    @POST("api/profile/")
+    @POST("api/profile")
     fun setProfileDetails(@Body profileDetails: ProfileDetails): Call<ProfileDetails>
 
     @GET("api/profile/interests")
@@ -24,5 +24,5 @@ interface UserService {
     fun getTraits(): Call<List<UserTrait>>
 
     @POST("api/profile/traits")
-    fun setTraits(@Body traits: List<Trait>): Call<ProfileDetails>
+    fun setTraits(@Body traits: List<UserTrait>): Call<ProfileDetails>
 }
