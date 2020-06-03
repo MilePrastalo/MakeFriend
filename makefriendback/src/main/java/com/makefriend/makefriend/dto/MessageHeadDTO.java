@@ -4,14 +4,16 @@ public class MessageHeadDTO {
     private String name;
     private String imagePath;
     private String lastText;
+    private String username;
 
     public MessageHeadDTO() {
     }
 
-    public MessageHeadDTO(String name, String imagePath, String lastText) {
+    public MessageHeadDTO(String name, String imagePath, String lastText, String username) {
         this.name = name;
         this.imagePath = imagePath;
         this.lastText = lastText;
+        this.username = username;
     }
 
     public String getName() {
@@ -36,5 +38,13 @@ public class MessageHeadDTO {
 
     public void setLastText(String lastText) {
         this.lastText = lastText;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

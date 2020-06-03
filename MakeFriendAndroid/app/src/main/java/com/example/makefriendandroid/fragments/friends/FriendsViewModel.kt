@@ -14,9 +14,9 @@ import retrofit2.Response
 class FriendsViewModel : ViewModel() {
     val friendRequests = MutableLiveData<List<FriendRequest>>()
     val friends = MutableLiveData<List<UserBasic>>()
+    val service = RetrofitService.get_retrofit().create(FriendsService::class.java)
 
     fun getFriendRequests(){
-        val service = RetrofitService.get_retrofit().create(FriendsService::class.java)
         service.getFriendRequests().enqueue(object :Callback<List<FriendRequest>>{
             override fun onFailure(call: Call<List<FriendRequest>>, t: Throwable) {
                 Log.i("FriendsViewModel",t.message)
@@ -31,7 +31,6 @@ class FriendsViewModel : ViewModel() {
         })
     }
     fun getFriends(){
-        val service = RetrofitService.get_retrofit().create(FriendsService::class.java)
         service.getAllFriends().enqueue(object :Callback<List<UserBasic>>{
             override fun onFailure(call: Call<List<UserBasic>>, t: Throwable) {
                 Log.i("FriendsViewModel",t.message) }
@@ -42,7 +41,29 @@ class FriendsViewModel : ViewModel() {
             ) {
                 friends.value = response.body()
             }
+        })
+    }
+    fun acceptRequest(request: FriendRequest){
+        service.acceptFriendRequest(request.id).enqueue(object :Callback<Void>{
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.i("FriendsViewModel",t.message)
+            }
 
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                getFriendRequests()
+                getFriends()
+            }
+        })
+    }
+    fun rejectRequest(request:FriendRequest){
+        service.rejectFriendRequest(request.id).enqueue(object :Callback<Void>{
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.i("FriendsViewModel",t.message)
+            }
+
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                getFriendRequests()
+            }
         })
     }
 }

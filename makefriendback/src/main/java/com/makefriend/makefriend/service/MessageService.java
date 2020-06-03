@@ -31,13 +31,13 @@ public class MessageService {
         return friends;
     }
 
-    public List<Message> findChatMessages(Long friendId) {
+    public List<Message> findChatMessages(String friendUsername) {
         User user = userService.getUserFromAuthentication();
-        return messageRepository.findChatMessages(user.getId(), friendId);
+        return messageRepository.findChatMessages(user.getUsername(), friendUsername);
     }
     public Message sendMessage(MessageDTO dto) throws ParseException {
-        User sender = userService.findOne(dto.getSender());
-        User receiver = userService.findOne(dto.getReceiver());
+        User sender = userService.findOneByUsename(dto.getSender());
+        User receiver = userService.findOneByUsename(dto.getReceiver());
         Message m = new Message();
         m.setReceiver(receiver);
         m.setSender(sender);
@@ -47,9 +47,9 @@ public class MessageService {
         return messageRepository.save(m);
     }
 
-    public MessageSuggest getSuggestedMessage(Long friendId){
+    public MessageSuggest getSuggestedMessage(String friendUsername){
         User u1 = userService.getUserFromAuthentication();
-        User u2 = userService.findOne(friendId);
+        User u2 = userService.findOneByUsename(friendUsername);
         MessageSuggest ms = new MessageSuggest(u1,u2);
         KieSession session = kieContainer.newKieSession("session");
         session.insert(ms);

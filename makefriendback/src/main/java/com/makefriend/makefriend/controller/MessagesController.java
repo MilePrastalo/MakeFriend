@@ -31,13 +31,13 @@ public class MessagesController {
     @GetMapping("")
     public ResponseEntity<List<MessageHeadDTO>> getMessages() {
         List<User> friends = messageService.getFriendsChat();
-        List<MessageHeadDTO> list = friends.stream().map(user -> new MessageHeadDTO(user.getFirstName() + " " + user.getLastName(), "", "")).collect(Collectors.toList());
+        List<MessageHeadDTO> list = friends.stream().map(user -> new MessageHeadDTO(user.getFirstName() + " " + user.getLastName(), "", "", user.getUsername())).collect(Collectors.toList());
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @GetMapping("{friendId}")
-    public ResponseEntity<List<MessageDTO>> getChatMessages(@PathVariable("friendId") Long friendId) {
-        List<Message> messages = this.messageService.findChatMessages(friendId);
+    @GetMapping("{friendUsername}")
+    public ResponseEntity<List<MessageDTO>> getChatMessages(@PathVariable("friendUsername") String friendUsername) {
+        List<Message> messages = this.messageService.findChatMessages(friendUsername);
         List<MessageDTO> messagesDto = messages.stream().map(MessageConverter::toDTO).collect(Collectors.toList());
         return new ResponseEntity<>(messagesDto, HttpStatus.OK);
     }
@@ -48,10 +48,23 @@ public class MessagesController {
         return new ResponseEntity<>(MessageConverter.toDTO(m), HttpStatus.OK);
     }
 
-    @GetMapping("suggested/{friendId}")
-    public ResponseEntity<List<MessageFromRule>> getSuggestedMessage(@PathVariable("friendId") Long friendId) {
-        MessageSuggest ms = messageService.getSuggestedMessage(friendId);
-        return new ResponseEntity<>(ms.getMessageSuggests(), HttpStatus.OK);
+    @GetMapping("suggested/{friendUsername}")
+    public ResponseEntity<MessageFromRule> getSuggestedMessage(@PathVariable("friendUsername") String friendUsername) {
+        MessageSuggest ms = messageService.getSuggestedMessage(friendUsername);
+        //Sort messages
+        for (int i = 0; i<ms.getMessageSuggests().size()-1; i++) {
+            for (int j = i+1; j<ms.getMessageSuggests().size(); j++) {
+                if(ms.getMessageSuggests().get(j).getStrength()>ms.getMessageSuggests().get(i).getStrength()){
+                    MessageFromRule temp = ms.getMessageSuggests().get(j);
+                    ms.getMessageSuggests().set(j,ms.getMessageSuggests().get(i));
+                    ms.getMessageSuggests().set(i,temp);
+                }
+            }
+        }
+        if(ms.getMessageSuggests().size() == 0){
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(ms.getMessageSuggests().get(0), HttpStatus.OK);
     }
 
 

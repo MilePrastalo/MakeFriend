@@ -3,15 +3,15 @@ package com.makefriend.makefriend.dto;
 public class MessageDTO {
 
     private Long id;
-    private Long sender;
-    private Long receiver;
+    private String sender;
+    private String receiver;
     private String time;
     private String text;
 
     public MessageDTO() {
     }
 
-    public MessageDTO(Long id, Long sender, Long receiver, String time, String text) {
+    public MessageDTO(Long id, String sender, String receiver, String time, String text) {
         this.id = id;
         this.sender = sender;
         this.receiver = receiver;
@@ -27,19 +27,19 @@ public class MessageDTO {
         this.id = id;
     }
 
-    public Long getSender() {
+    public String getSender() {
         return sender;
     }
 
-    public void setSender(Long sender) {
+    public void setSender(String sender) {
         this.sender = sender;
     }
 
-    public Long getReceiver() {
+    public String getReceiver() {
         return receiver;
     }
 
-    public void setReceiver(Long receiver) {
+    public void setReceiver(String receiver) {
         this.receiver = receiver;
     }
 

@@ -14,16 +14,16 @@ interface MessagesService {
     @GET("api/messages/")
     fun getMessages(): Call<List<MessageHead>>
 
-    @GET("api/messages/{friendId}")
+    @GET("api/messages/{friendUsername}")
     fun getChatMessages(
-        @Path("friendId") friendId: Long
+        @Path("friendUsername") friendUsername: String
     ): Call<List<Message>>
 
     @POST("api/messages")
     fun sendChatMessage(@Body message: Message): Call<Message>
 
-    @GET("api/messages/suggested/{friendId}")
+    @GET("api/messages/suggested/{friendUsername}")
     fun getSuggestedMessage(
-        @Path("friendId") friendId: Long
-    ): Call<List<SuggestedMessage>>
+        @Path("friendUsername") friendUsername: String
+    ): Call<SuggestedMessage>
 }

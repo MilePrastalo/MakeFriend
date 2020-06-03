@@ -1,4 +1,4 @@
 package com.example.makefriendandroid.model
 
-class SendFriendRequest(val senderId:Long, val reviewerId:Long) {
+class SendFriendRequest(val sender:String, val receiver:String) {
 }

@@ -5,12 +5,14 @@ public class FriendSuggestionDTO {
     private String firstName;
     private String lastName;
     private int simmilar;
+    private String username;
 
-    public FriendSuggestionDTO(Long id, String firstName, String lastName, int simmilar) {
+    public FriendSuggestionDTO(Long id, String firstName, String lastName, int simmilar,String username) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.simmilar = simmilar;
+        this.username = username;
     }
 
     public Long getId() {
@@ -43,5 +45,13 @@ public class FriendSuggestionDTO {
 
     public void setSimmilar(int simmilar) {
         this.simmilar = simmilar;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

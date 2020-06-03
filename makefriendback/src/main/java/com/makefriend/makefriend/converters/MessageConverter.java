@@ -10,8 +10,8 @@ public class MessageConverter {
     public static MessageDTO toDTO(Message m) {
         MessageDTO dto = new MessageDTO();
         dto.setId(m.getId());
-        dto.setReceiver(m.getReceiver().getId());
-        dto.setSender(m.getSender().getId());
+        dto.setReceiver(m.getReceiver().getUsername());
+        dto.setSender(m.getSender().getUsername());
         dto.setText(m.getText());
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         dto.setTime(sdf.format(m.getTime()));

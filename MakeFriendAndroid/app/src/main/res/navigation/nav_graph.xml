@@ -49,9 +49,8 @@
         android:label="chat_fragment"
         tools:layout="@layout/chat_fragment" >
         <argument
-            android:name="friendId"
-            app:argType="long"
-            android:defaultValue="0L" />
+            android:name="friendUsername"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"

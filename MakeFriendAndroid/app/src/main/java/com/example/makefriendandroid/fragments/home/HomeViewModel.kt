@@ -4,8 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.makefriendandroid.model.FriendRequest
 import com.example.makefriendandroid.model.FriendSuggestion
 import com.example.makefriendandroid.model.ProfileDetails
+import com.example.makefriendandroid.model.SendFriendRequest
+import com.example.makefriendandroid.service.AppData
 import com.example.makefriendandroid.service.FriendsService
 import com.example.makefriendandroid.service.RetrofitService
 import com.example.makefriendandroid.service.UserService
@@ -52,6 +55,22 @@ class HomeViewModel : ViewModel() {
                 name.value = response.body()!!.firstName + " " + response.body()!!.lastName
             }
 
+        })
+    }
+
+    fun addFriend(username:String){
+        val friendRequest = SendFriendRequest(AppData.username!!,username)
+        val friendService: FriendsService =RetrofitService.get_retrofit().create(FriendsService::class.java)
+        friendService.sendFriendRequest(friendRequest).enqueue(object : Callback<Void> {
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.i("HomeFail",t.message)
+            }
+            override fun onResponse(
+                call: Call<Void>,
+                response: Response<Void>
+            ) {
+                getSuggestedFriends()
+            }
         })
     }
 }

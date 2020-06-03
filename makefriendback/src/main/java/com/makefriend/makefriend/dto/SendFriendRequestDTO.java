@@ -1,30 +1,31 @@
 package com.makefriend.makefriend.dto;
 
 public class SendFriendRequestDTO {
-    private Long senderId;
-    private Long reviewerId;
+    private String sender;
+    private String receiver;
+
 
     public SendFriendRequestDTO() {
     }
 
-    public SendFriendRequestDTO(Long senderId, Long reviewerId) {
-        this.senderId = senderId;
-        this.reviewerId = reviewerId;
+    public SendFriendRequestDTO(String sender, String receiver) {
+        this.sender = sender;
+        this.receiver = receiver;
     }
 
-    public Long getSenderId() {
-        return senderId;
+    public String getSender() {
+        return sender;
     }
 
-    public void setSenderId(Long senderId) {
-        this.senderId = senderId;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
-    public Long getReviewerId() {
-        return reviewerId;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public void setReviewerId(Long reviewerId) {
-        this.reviewerId = reviewerId;
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 }

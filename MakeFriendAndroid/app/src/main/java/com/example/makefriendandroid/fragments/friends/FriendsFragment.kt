@@ -41,7 +41,7 @@ class FriendsFragment : Fragment() {
         })
         viewModel.friendRequests.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                requests_recycler.adapter = FriendRequestAdapter(it)
+                requests_recycler.adapter = FriendRequestAdapter(it,viewModel)
             }
 
         })

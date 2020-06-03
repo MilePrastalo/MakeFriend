@@ -11,7 +11,7 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     @Query("select m from Message m where m.receiver.id = :userId or m.sender.id = :userId")
     List<Message> findAllUserMessages(Long userId);
 
-    @Query("select m from Message m where m.sender.id = :userId and m.receiver.id = :friendId or m.sender.id = :friendId and m.receiver.id = :userId order by m.time asc")
-    List<Message> findChatMessages(Long userId, Long friendId);
+    @Query("select m from Message m where m.sender.username = :username and m.receiver.username = :friendUsername or m.sender.username = :friendUsername and m.receiver.username = :username order by m.time asc")
+    List<Message> findChatMessages(String username, String friendUsername);
 
 }
