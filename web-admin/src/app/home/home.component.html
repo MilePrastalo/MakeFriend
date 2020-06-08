@@ -1,0 +1,29 @@
+<div>
+    <div>
+        <h2>Traits</h2>
+        <table>
+            <tr *ngFor="let trait of traits"><td>{{trait.name}}</td></tr>
+        </table>
+        <input type="text" placeholder="Trait name" id="traitName">
+        <button (click)="addTrait()">Add trait</button>
+    </div>
+    <div>
+        <h2>Interests categories</h2>
+        <table>
+            <tr *ngFor="let category of interestCategories"><td>{{category.name}}</td></tr>
+        </table>
+        <input type="text" placeholder="Category name" id="categoryName">
+        <button (click)="addCategory()">Add Category</button>
+    </div>
+    <div>
+        <h2>Interests</h2>
+        <table *ngFor="let category of interestCategories">
+            <tr><th>{{category.name}}</th></tr>
+            <tr  *ngFor="let interest of category.interests"><td>{{interest.name}}</td></tr>
+        </table>
+        <select id="selectInterest"><option *ngFor="let category of interestCategories" [value]="category.id">{{category.name}}</option></select>
+        <input type="text" placeholder="Interest name" id="interestName">
+        <button (click)="addInterest()">Add Interest</button>
+    </div>
+    
+</div>

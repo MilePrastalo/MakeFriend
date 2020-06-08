@@ -2,6 +2,7 @@ package com.makefriend.makefriend.dto;
 
 import com.makefriend.makefriend.model.InterestCategory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +17,11 @@ public class InterestCategoryDTO {
     public InterestCategoryDTO(InterestCategory interestCategory) {
         this.id = interestCategory.getId();
         this.name = interestCategory.getName();
-        this.interests = interestCategory.getInterests().stream().map(InterestDTO::new).collect(Collectors.toList());
+        if (interestCategory.getInterests() != null) {
+            this.interests = interestCategory.getInterests().stream().map(InterestDTO::new).collect(Collectors.toList());
+        } else {
+            this.interests = new ArrayList<>();
+        }
     }
 
     public Long getId() {

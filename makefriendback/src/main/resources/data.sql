@@ -1,7 +1,11 @@
 INSERT INTO user (`id`, `email`, `first_name`, `last_name`, `password`, `username`) VALUES ('100', 'pera@pera.com', 'pera', 'peric', '$2a$10$PxvKsblywCsPRpmccc2Id.Vf5bMDvXfRMxUhmhhAL1gxXLcWDAhIa', 'peric');
 INSERT INTO user (`id`, `email`, `first_name`, `last_name`, `password`, `username`) VALUES ('200', 'mika@mika.com', 'mika', 'mikic', '$2a$10$PxvKsblywCsPRpmccc2Id.Vf5bMDvXfRMxUhmhhAL1gxXLcWDAhIa', 'mika');
 INSERT INTO user (`id`, `email`, `first_name`, `last_name`, `password`, `username`) VALUES ('300', 'laza@laza.com', 'laza', 'lazic', '$2a$10$PxvKsblywCsPRpmccc2Id.Vf5bMDvXfRMxUhmhhAL1gxXLcWDAhIa', 'laza');
+
 INSERT INTO authority (`id`, `name`) VALUES ('100', 'USER');
+INSERT INTO authority (`id`, `name`) VALUES ('200', 'ADMIN');
+insert into user_authorities (user_id,authorities_id) values(100,200);
+insert into user_authorities (user_id,authorities_id) values(100,100);
 
 INSERT INTO interest_category (`id`, `name`) VALUES ('100', 'SPORT');
 INSERT INTO interest_category (`id`, `name`) VALUES ('200', 'TVMOVIE');

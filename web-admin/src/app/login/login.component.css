@@ -1,0 +1,22 @@
+.parent{
+    width: 200px;
+	height: 200px;
+	
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+  	
+	margin: auto;
+}
+input{
+    width: 150px;
+    height: 20px;
+    margin-bottom: 5px;
+}
+button{
+    width: 100px;
+    margin-top: 5px;
+    margin-left: 30px;
+}
