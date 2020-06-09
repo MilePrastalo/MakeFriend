@@ -1,0 +1,16 @@
+import  com.makefriend.makefriend.model.Report;
+
+rule "More than 5 reports in 3 hours to one user"
+    when
+        $t1: Report($cUsername: username)
+        Number(intValue >= 5) from accumulate(
+            $t2: Report(
+                this != $t1,
+                username == $cUsername,
+                this meets[24h] $t1
+            ),
+            count($t2)
+        )
+    then
+        System.out.println("User " + $cUsername + " should be banned");
+end
