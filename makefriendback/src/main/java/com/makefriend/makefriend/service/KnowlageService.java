@@ -20,14 +20,6 @@ public class KnowlageService {
         this.kieContainer = kieContainer;
     }
 
-    @PostConstruct
-    private  void init(){
-        KnowledgeBuilderConfiguration knowledgeBuilderConfiguration = KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration();
-        knowledgeBuilderConfiguration.setProperty("drools.dialect.mvel.strict","false");
-        java.lang.System.setProperty("drools.dialect.mvek.strict","false");
-        KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(knowledgeBuilderConfiguration);
-        this.kieSession = kieContainer.newKieSession();
-    }
 
     @PreDestroy
     private void release(){
@@ -39,6 +31,9 @@ public class KnowlageService {
     }
 
     public KieSession getKieSession() {
+        if(kieSession == null){
+            kieSession = kieContainer.newKieSession();
+        }
         return kieSession;
     }
 
