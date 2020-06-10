@@ -1,6 +1,6 @@
-INSERT INTO user (`id`, `email`, `first_name`, `last_name`, `password`, `username`) VALUES ('100', 'pera@pera.com', 'pera', 'peric', '$2a$10$PxvKsblywCsPRpmccc2Id.Vf5bMDvXfRMxUhmhhAL1gxXLcWDAhIa', 'peric');
-INSERT INTO user (`id`, `email`, `first_name`, `last_name`, `password`, `username`) VALUES ('200', 'mika@mika.com', 'mika', 'mikic', '$2a$10$PxvKsblywCsPRpmccc2Id.Vf5bMDvXfRMxUhmhhAL1gxXLcWDAhIa', 'mika');
-INSERT INTO user (`id`, `email`, `first_name`, `last_name`, `password`, `username`) VALUES ('300', 'laza@laza.com', 'laza', 'lazic', '$2a$10$PxvKsblywCsPRpmccc2Id.Vf5bMDvXfRMxUhmhhAL1gxXLcWDAhIa', 'laza');
+INSERT INTO user (`id`,`banned`, `email`, `first_name`, `last_name`, `password`, `username`) VALUES ('100', 0,'pera@pera.com', 'pera', 'peric', '$2a$10$PxvKsblywCsPRpmccc2Id.Vf5bMDvXfRMxUhmhhAL1gxXLcWDAhIa', 'peric');
+INSERT INTO user (`id`,`banned`, `email`, `first_name`, `last_name`, `password`, `username`) VALUES ('200',0, 'mika@mika.com', 'mika', 'mikic', '$2a$10$PxvKsblywCsPRpmccc2Id.Vf5bMDvXfRMxUhmhhAL1gxXLcWDAhIa', 'mika');
+INSERT INTO user (`id`,`banned`, `email`, `first_name`, `last_name`, `password`, `username`) VALUES ('300',0, 'laza@laza.com', 'laza', 'lazic', '$2a$10$PxvKsblywCsPRpmccc2Id.Vf5bMDvXfRMxUhmhhAL1gxXLcWDAhIa', 'laza');
 
 INSERT INTO authority (`id`, `name`) VALUES ('100', 'USER');
 INSERT INTO authority (`id`, `name`) VALUES ('200', 'ADMIN');

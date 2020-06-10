@@ -13,11 +13,12 @@ public class Report {
 
     private Date executionTime;
     private String username;
-
+    private Boolean ban;
 
     public Report(Date executionTime, String username) {
         this.executionTime = executionTime;
         this.username = username;
+        ban = false;
     }
 
     public Date getExecutionTime() {
@@ -34,5 +35,13 @@ public class Report {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Boolean getBan() {
+        return ban;
+    }
+
+    public void setBan(Boolean ban) {
+        this.ban = ban;
     }
 }

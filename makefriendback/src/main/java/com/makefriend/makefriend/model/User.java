@@ -30,6 +30,9 @@ public class User implements UserDetails {
     @Column
     private String email;
 
+    @Column
+    private Boolean banned;
+
 
     @ManyToMany
     private Set<Interest> interests;
@@ -87,7 +90,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !banned;
     }
 
     @Override
@@ -185,5 +188,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public Boolean getBanned() {
+        return banned;
+    }
 
+    public void setBanned(Boolean banned) {
+        this.banned = banned;
+    }
 }
