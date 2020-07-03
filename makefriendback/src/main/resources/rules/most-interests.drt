@@ -1,0 +1,31 @@
+template header
+minInterests
+maxInterests
+
+import com.makefriend.makefriend.model.Interest
+import com.makefriend.makefriend.model.User
+import com.makefriend.makefriend.dto.UserListDTO
+import com.makefriend.makefriend.dto.UserInterestNumber
+
+import java.util.List;
+import java.util.ArrayList;
+global ArrayList<UserInterestNumber> selected;
+
+template "classification-rules"
+
+rule "Select users with interests_@{row.rowNumber}"
+no-loop true
+when
+    $c: User($inter: interests)
+    $countInterest: Long(intValue >= @{minInterests} &&
+               			intValue <= @{maxInterests}) from accumulate(
+                Interest($t: this )
+            from $inter,
+            count($t)
+            )
+then
+    UserInterestNumber uiNum = new UserInterestNumber($c.getUsername(), $countInterest);
+    selected.add(uiNum);
+end
+
+end template

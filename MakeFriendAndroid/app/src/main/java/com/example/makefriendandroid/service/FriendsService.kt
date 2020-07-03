@@ -15,18 +15,27 @@ interface FriendsService {
     fun getAllFriends(): Call<List<UserBasic>>
 
     @POST("api/friends")
-    fun sendFriendRequest(@Body friendRequest: SendFriendRequest
+    fun sendFriendRequest(
+        @Body friendRequest: SendFriendRequest
     ): Call<Void>
 
     @POST("api/friends/accept/{requestId}")
-    fun acceptFriendRequest(@Path("requestId") requestId: Long
+    fun acceptFriendRequest(
+        @Path("requestId") requestId: Long
     ): Call<Void>
 
     @POST("api/friends/reject/{requestId}")
-    fun rejectFriendRequest( @Path("requestId") requestId: Long
+    fun rejectFriendRequest(
+        @Path("requestId") requestId: Long
     ): Call<Void>
 
     @GET("api/friends/requests")
     fun getFriendRequests(): Call<List<FriendRequest>>
+
+    @GET("api/report/reported")
+    fun getReportedByUser(): Call<List<UserBasic>>
+
+    @GET("api/report/{reportUsername}")
+    fun report(@Path("reportUsername") reportUsername: String): Call<UserBasic>
 
 }

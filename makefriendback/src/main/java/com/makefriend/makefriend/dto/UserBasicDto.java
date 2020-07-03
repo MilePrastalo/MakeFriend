@@ -6,11 +6,13 @@ public class UserBasicDto {
     private Long id;
     private String firstName;
     private String lastName;
+    private String username;
 
     public UserBasicDto(User user) {
         this.id = user.getId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
+        this.username = user.getUsername();
     }
 
     public UserBasicDto(Long id, String firstName, String lastName) {
@@ -44,5 +46,13 @@ public class UserBasicDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

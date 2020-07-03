@@ -8,6 +8,8 @@ import { AddTrait } from '../model/AddTrait';
 import { InterestCategory } from '../model/InterestCategory';
 import { AddCategory } from '../model/AddCategory';
 import { AddInterest } from '../model/AddInterest';
+import { InterestNumber } from '../model/InterestNumber';
+import { User } from '../model/User';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +39,9 @@ export class UserService {
   }
   addInterest(aInterest: AddInterest): Observable<Array<InterestCategory>> {
     return this.http.post<Array<InterestCategory>>(this.pathService.path + '/api/interests', aInterest);
+  }
+  getUsersByInterests(num: InterestNumber): Observable<Array<User>> {
+    return this.http.post<Array<User>>(this.pathService.path + '/api/profile/users_by_interests', num);
   }
 
 

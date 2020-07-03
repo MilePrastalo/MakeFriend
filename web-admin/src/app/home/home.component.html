@@ -25,5 +25,16 @@
         <input type="text" placeholder="Interest name" id="interestName">
         <button (click)="addInterest()">Add Interest</button>
     </div>
+
+    <div>
+        <h2>Search users by number of interests</h2>
+        <input id="min" type="number" placeholder="Minimum interests">
+        <input id="max" type="number" placeholder="Maximum interests">
+        <button (click)="search()">Search</button>
+
+        <table>
+            <tr *ngFor="let user of users"><td>{{user.username}}</td><td>{{user.numberInterests}}</td></tr>
+        </table>
+    </div>
     
 </div>

@@ -2,5 +2,7 @@
 <kmodule xmlns="http://www.drools.org/xsd/kmodule">
     <kbase name="rules" packages="rules">
         <ksession name="session"/>
+        <ksession name="events"/>
+        <ksession name="templates"/>
     </kbase>
 </kmodule>

@@ -36,17 +36,22 @@ class FriendsFragment : Fragment() {
         friends_recycler.layoutManager = LinearLayoutManager(context)
         viewModel.friends.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                friends_recycler.adapter = FriendsAdapter(it)
+                friends_recycler.adapter = FriendsAdapter(it, viewModel)
             }
         })
         viewModel.friendRequests.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                requests_recycler.adapter = FriendRequestAdapter(it,viewModel)
+                requests_recycler.adapter = FriendRequestAdapter(it, viewModel)
             }
-
+        })
+        viewModel.reported.observe(viewLifecycleOwner, Observer {
+            if (it != null && viewModel.friends.value != null) {
+                friends_recycler.adapter = FriendsAdapter(viewModel.friends.value!!, viewModel)
+            }
         })
         viewModel.getFriendRequests()
         viewModel.getFriends()
+        viewModel.getReportedByUser()
     }
 
 }

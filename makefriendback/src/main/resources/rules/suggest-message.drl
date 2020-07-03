@@ -1,8 +1,11 @@
 import com.makefriend.makefriend.model.MessageSuggest
 import com.makefriend.makefriend.model.MessageFromRule
-
+import com.makefriend.makefriend.model.Interest
+import com.makefriend.makefriend.model.User
+import com.makefriend.makefriend.dto.UserListDTO
 rule "A and B like football"
 agenda-group "Message"
+salience(10)
 lock-on-active true
     when
         $ms: MessageSuggest(getUserAInterests() contains "Football" && getUserBInterests() contains "Football")
@@ -13,6 +16,7 @@ end
 
 rule "A and B like Volleyball"
 agenda-group "Message"
+salience(10)
 lock-on-active true
     when
         $ms: MessageSuggest(getUserAInterests() contains "Football" && getUserBInterests() contains "Football")
@@ -23,6 +27,7 @@ end
 
 rule "A and B like Basketball"
 agenda-group "Message"
+salience(10)
 lock-on-active true
     when
         $ms: MessageSuggest(getUserAInterests() contains "Basketball" && getUserBInterests() contains "Basketball")
@@ -33,6 +38,7 @@ end
 
 rule "A like sport"
 agenda-group "Message"
+salience(9)
 lock-on-active true
     when
         $ms: MessageSuggest(userAInterests contains "Football" || userAInterests contains "Basketball" || userAInterests contains "Volleyball")
@@ -43,6 +49,7 @@ end
 
 rule "B like sport"
 agenda-group "Message"
+salience(9)
 lock-on-active true
     when
         $ms:MessageSuggest(userBInterests contains "Football" || userBInterests contains "Basketball" || userBInterests contains "Volleyball")
@@ -53,6 +60,7 @@ end
 
 rule "A and B like Sport"
 agenda-group "Message"
+salience(8)
     when
         $ms:MessageSuggest(!(getCommonCategories() contains "SPORT") && getCategoriesALiked() contains "SPORT" && getCategoriesBLiked() contains "SPORT")
     then
@@ -64,6 +72,7 @@ end
 
 rule "A like books"
 agenda-group "Message"
+salience(9)
 lock-on-active true
     when
         $ms:MessageSuggest(getUserAInterests() contains "FantasyBooks" || getUserAInterests() contains "DramaBooks" || getUserAInterests() contains "PoetryBooks" || getUserAInterests() contains "DetectiveBooks" || getUserAInterests() contains "HistoryBooks")
@@ -74,6 +83,7 @@ end
 
 rule "B like books"
 agenda-group "Message"
+salience(9)
 lock-on-active true
     when
         $ms:MessageSuggest(getUserBInterests() contains "FantasyBooks" || getUserBInterests() contains "DramaBooks" || getUserBInterests() contains "PoetryBooks" || getUserBInterests() contains "DetectiveBooks" || getUserBInterests() contains "HistoryBooks")
@@ -83,6 +93,7 @@ lock-on-active true
 end
 
 rule "A and B like Books"
+salience(8)
 agenda-group "Message"
     when
         $ms: MessageSuggest(!(getCommonCategories() contains "BOOKS") && getCategoriesALiked() contains "BOOKS" && getCategoriesBLiked() contains "BOOKS")
@@ -95,6 +106,7 @@ end
 
 rule "A like tv and movies"
 agenda-group "Message"
+salience(9)
 lock-on-active true
     when
         $ms: MessageSuggest(userBInterests contains "TV Shows" || userBInterests contains "Movies")
@@ -104,6 +116,7 @@ lock-on-active true
 end
 
 rule "B like tv and movies"
+salience(9)
 agenda-group "Message"
 lock-on-active true
     when
@@ -114,6 +127,7 @@ lock-on-active true
 end
 
 rule "A and B like tv"
+salience(8)
 agenda-group "Message"
     when
         $ms: MessageSuggest(!(getCommonCategories() contains "BOOKS") && getCategoriesALiked()contains "TVMOVIE" && getCategoriesBLiked() contains "TVMOVIE")
@@ -125,6 +139,7 @@ agenda-group "Message"
 end
 
 rule "A like Movies and B like Books"
+salience(7)
 agenda-group "Message"
     when
         $ms:MessageSuggest(getCategoriesALiked() contains "BOOKS" && getCategoriesBLiked() contains "Movies")
@@ -134,6 +149,7 @@ agenda-group "Message"
 end
 
 rule "B like Movies and A like Books"
+salience(7)
 agenda-group "Message"
     when
         $ms:MessageSuggest(getCategoriesALiked() contains "BOOKS" && getUserBInterests() contains "Movies")
@@ -143,6 +159,7 @@ agenda-group "Message"
 end
 
 rule "A likes music"
+salience(9)
 agenda-group "Message"
 lock-on-active true
     when
@@ -153,6 +170,7 @@ lock-on-active true
 end
 
 rule "B likes music"
+salience(9)
 agenda-group "Message"
 lock-on-active true
     when
@@ -163,6 +181,7 @@ lock-on-active true
 end
 
 rule "A likes music and B likes music"
+salience(8)
 agenda-group "Message"
     when
         $ms:MessageSuggest(!(getCommonCategories() contains "MUSIC") && getCategoriesALiked() contains "MUSIC" && getCategoriesBLiked() contains "MUSIC")
@@ -174,6 +193,7 @@ agenda-group "Message"
 end
 
 rule "Both like music and both like tv"
+salience(6)
 agenda-group "Message"
     when
         $ms:MessageSuggest(getCommonCategories() contains "MUSIC" && getCommonCategories() contains "TVMOVIE")
@@ -182,4 +202,17 @@ agenda-group "Message"
         $ms.getMessageSuggests().add(messageFromRule);
 end
 
-
+rule "Select special message"
+salience(-1)
+agenda-group "Message"
+    when
+        $ms:MessageSuggest($messages: messageSuggests)
+        Number(intValue >= 6) from accumulate(
+            MessageFromRule($t: this, strength >= 2)
+        from $messages,
+        count($t)
+        )
+    then
+    MessageFromRule messageFromRule = new MessageFromRule("We are the same",10);
+    $ms.getMessageSuggests().add(messageFromRule);
+end

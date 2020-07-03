@@ -32,7 +32,7 @@ public class KnowlageService {
 
     public KieSession getKieSession() {
         if(kieSession == null){
-            kieSession = kieContainer.newKieSession("session");
+            kieSession = kieContainer.newKieSession("events");
         }
         return kieSession;
     }

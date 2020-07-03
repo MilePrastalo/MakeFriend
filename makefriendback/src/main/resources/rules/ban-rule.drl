@@ -1,16 +1,36 @@
 import  com.makefriend.makefriend.model.Report;
+import  com.makefriend.makefriend.model.User;
 
-rule "More than 5 reports in 3 hours to one user"
+rule "More than 5 reports in 24 hours to one user"
+agenda-group "report"
     when
-        $t1: Report($cUsername: username)
+        $t1: Report($userReported: reported)
+        $cUsername: User($userReported.username)
         Number(intValue >= 4) from accumulate(
             $t2: Report(
                 this != $t1,
-                username == $cUsername,
+                reported.username == $cUsername,
                 this meets[24h] $t1
             ),
             count($t2)
         )
     then
         $t1.setBan(true);
+end
+
+rule "More than 5 reports in 24 hours from one user"
+agenda-group "report"
+    when
+        $t1: Report($userReporting: reportedBy)
+        $cUsername: User($userReporting.username)
+        Number(intValue >= 4) from accumulate(
+            $t2: Report(
+                this != $t1,
+                reportedBy.username == $cUsername,
+                this meets[24h] $t1
+            ),
+            count($t2)
+        )
+    then
+        System.out.println("Potential abuse of reporting system");
 end

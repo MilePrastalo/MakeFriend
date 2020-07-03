@@ -6,6 +6,8 @@ import { InterestCategory } from '../model/InterestCategory';
 import { AddCategory } from '../model/AddCategory';
 import { Interest } from '../model/Interest';
 import { AddInterest } from '../model/AddInterest';
+import { User } from '../model/User';
+import { InterestNumber } from '../model/InterestNumber';
 
 @Component({
   selector: 'app-home',
@@ -16,9 +18,11 @@ export class HomeComponent implements OnInit {
 
   constructor(private service: UserService) { }
 
-  private traits: Array<Trait>;
-  private interestCategories: Array<InterestCategory>;
-  private interests: Array<Interest>;
+  traits: Array<Trait>;
+  interestCategories: Array<InterestCategory>;
+  interests: Array<Interest>;
+  users: Array<User>;
+
 
   ngOnInit(): void {
     this.service.getTraits().subscribe(
@@ -71,6 +75,18 @@ export class HomeComponent implements OnInit {
     this.service.addInterest(addInterest).subscribe(
       response => {
         this.interestCategories = response;
+      }
+    );
+  }
+  search() {
+    const min = (document.getElementById('min') as HTMLInputElement).value;
+    const max = (document.getElementById('max') as HTMLInputElement).value;
+    const numbers = new InterestNumber(Number(min),Number(max));
+    console.log(min,max);
+    this.service.getUsersByInterests(numbers).subscribe(
+      response => {
+        console.log(response);
+        this.users = response;
       }
     );
   }

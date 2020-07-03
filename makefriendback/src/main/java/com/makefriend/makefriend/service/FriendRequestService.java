@@ -99,11 +99,6 @@ public class FriendRequestService {
             session.insert(fm);
             session.getAgenda().getAgendaGroup("Traits").setFocus();
             session.fireAllRules();
-
-            if (fm.getSimilarTraits() >= 0) {
-                session.getAgenda().getAgendaGroup("Interests").setFocus();
-                session.fireAllRules();
-            }
             session.dispose();
 
             FriendSuggestionDTO s = new FriendSuggestionDTO(u.getId(), u.getFirstName(), u.getLastName(), fm.getSimilar(), u.getUsername());

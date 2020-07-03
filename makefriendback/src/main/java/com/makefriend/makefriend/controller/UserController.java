@@ -2,6 +2,7 @@ package com.makefriend.makefriend.controller;
 
 import com.makefriend.makefriend.dto.*;
 import com.makefriend.makefriend.model.Interest;
+import com.makefriend.makefriend.model.InterestNumber;
 import com.makefriend.makefriend.model.User;
 import com.makefriend.makefriend.model.UserTrait;
 import com.makefriend.makefriend.service.UserService;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "api/profile", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin
 public class UserController {
 
     private final UserService userService;
@@ -108,5 +110,11 @@ public class UserController {
         User user = userService.setTraits(username, traitsDTO);
         ProfileDetailsDTO dto = new ProfileDetailsDTO(user);
         return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "users_by_interests", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<UserInterestNumber>> getUsersByInterests(@RequestBody InterestNumber interestNumber) {
+        List<UserInterestNumber> users = userService.getUsersWithInterests(interestNumber);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }

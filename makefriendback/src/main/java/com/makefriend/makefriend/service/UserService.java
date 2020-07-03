@@ -2,12 +2,19 @@ package com.makefriend.makefriend.service;
 
 import com.makefriend.makefriend.dto.InterestDTO;
 import com.makefriend.makefriend.dto.ProfileDetailsDTO;
+import com.makefriend.makefriend.dto.UserInterestNumber;
 import com.makefriend.makefriend.dto.UserTraitDTO;
 import com.makefriend.makefriend.model.Interest;
+import com.makefriend.makefriend.model.InterestNumber;
 import com.makefriend.makefriend.model.User;
 import com.makefriend.makefriend.model.UserTrait;
 import com.makefriend.makefriend.repository.UserRepository;
 import com.makefriend.makefriend.repository.UserTraitRepository;
+import org.drools.template.ObjectDataCompiler;
+import org.kie.api.builder.Results;
+import org.kie.api.io.ResourceType;
+import org.kie.api.runtime.KieSession;
+import org.kie.internal.utils.KieHelper;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +23,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.io.InputStream;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -111,5 +120,26 @@ public class UserService implements UserDetailsService {
             return null;
         }
         return findOneByUsename(username);
+    }
+
+    public List<UserInterestNumber> getUsersWithInterests(InterestNumber numbers){
+        List<UserInterestNumber> selected = new ArrayList<>();
+        InputStream template = UserService.class.getResourceAsStream("/rules/most-interests.drt");
+        ObjectDataCompiler converter = new ObjectDataCompiler();
+        List<InterestNumber> data = new ArrayList<>();
+        data.add(numbers);
+        String drl = converter.compile(data, template);
+
+
+        KieHelper kieHelper = new KieHelper();
+        kieHelper.addContent(drl, ResourceType.DRL);
+
+        KieSession kieSession = kieHelper.build().newKieSession();
+        for (User user : userRepository.findAll()) {
+            kieSession.insert(user);
+        }
+        kieSession.setGlobal("selected", selected);
+        kieSession.fireAllRules();
+        return selected;
     }
 }

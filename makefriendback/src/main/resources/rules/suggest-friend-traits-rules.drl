@@ -2,132 +2,203 @@ package com.makefriend.drools
 
 import com.makefriend.makefriend.model.FriendMatch
 rule "Same smoking positive"
+salience 2
+lock-on-active true
 agenda-group "Traits"
     when
         $fm:FriendMatch(getPossitiveATraits() contains "Smoking" && getPossitiveBTraits() contains "Smoking")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        update($fm)
 end
 
 rule "Same smoking negative"
+salience 2
+lock-on-active true
 agenda-group "Traits"
     when
         $fm:FriendMatch(getNegativeATraits() contains "Smoking" && getNegativeBTraits() contains "Smoking")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        update($fm)
 
 end
 
 rule "Different smoking 1"
+salience 2
+lock-on-active true
 agenda-group "Traits"
     when
         $fm:FriendMatch(getNegativeATraits() contains "Smoking" && getPossitiveBTraits() contains "Smoking")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        update($fm)
 
 end
 
 rule "different smoking 2"
+salience 2
+lock-on-active true
 agenda-group "Traits"
     when
         $fm:FriendMatch(getPossitiveATraits() contains "Smoking" && getNegativeBTraits() contains "Smoking")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        update($fm)
 
 end
 
 rule "Same drinking positive"
+salience 2
+lock-on-active true
 agenda-group "Traits"
     when
         $fm:FriendMatch(getPossitiveATraits() contains "Drinks" && getPossitiveBTraits() contains "Drinks")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        update($fm)
 end
 
 rule "Same drinking negative"
+salience 2
+lock-on-active true
 agenda-group "Traits"
     when
         $fm:FriendMatch(getNegativeATraits() contains "Drinks" && getNegativeBTraits() contains "Drinks")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        update($fm)
 end
 
 rule "Different drinking 1"
+salience 2
+lock-on-active true
 agenda-group "Traits"
     when
         $fm:FriendMatch(getNegativeATraits() contains "Drinks" && getPossitiveBTraits() contains "Drinks")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        update($fm)
 end
 
 rule "different drinking 2"
+salience 2
+lock-on-active true
 agenda-group "Traits"
     when
         $fm:FriendMatch(getPossitiveATraits() contains "Drinks" && getNegativeBTraits() contains "Drinks")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        update($fm)
 end
 
 rule "Same Active positive"
+salience 2
+lock-on-active true
 agenda-group "Traits"
     when
         $fm:FriendMatch(getPossitiveATraits() contains "Active" && getPossitiveBTraits() contains "Active")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        update($fm)
 end
 
 rule "Same Active negative"
+salience 2
+lock-on-active true
 agenda-group "Traits"
     when
         $fm:FriendMatch(getNegativeATraits() contains "Active" && getNegativeBTraits() contains "Active")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        update($fm)
 end
 
 rule "Different Active 1"
+salience 2
+lock-on-active true
 agenda-group "Traits"
     when
         $fm:FriendMatch(getNegativeATraits() contains "Active" && getPossitiveBTraits() contains "Active")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        update($fm)
 end
 
 rule "different Active 2"
+salience 2
+lock-on-active true
 agenda-group "Traits"
     when
         $fm:FriendMatch(getPossitiveATraits() contains "Active" && getNegativeBTraits() contains "Active")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        update($fm)
 end
 
 rule "Same University positive"
+salience 2
+lock-on-active true
 agenda-group "Traits"
     when
         $fm:FriendMatch(getPossitiveATraits() contains "University" && getPossitiveBTraits() contains "University")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        update($fm)
 end
 
 rule "Same University negative"
+salience 2
+lock-on-active true
 agenda-group "Traits"
     when
         $fm:FriendMatch(getNegativeATraits() contains "University" && getNegativeBTraits() contains "University")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        update($fm)
+
 end
 
 rule "Different University 1"
+salience 2
+lock-on-active true
 agenda-group "Traits"
     when
         $fm:FriendMatch(getNegativeATraits() contains "University" && getPossitiveBTraits() contains "University")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        update($fm)
+
 end
 
 rule "different University 2"
+salience 2
+lock-on-active true
 agenda-group "Traits"
     when
         $fm:FriendMatch(getPossitiveATraits() contains "University" && getNegativeBTraits() contains "University")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        update($fm)
+end
+
+rule "Are similar"
+salience 1
+lock-on-active true
+agenda-group "Traits"
+    when
+        $fm:FriendMatch(similarTraits >= 0)
+    then
+        kcontext.getKieRuntime().getAgenda().getAgendaGroup("Interests").setFocus();
+        System.out.println("Similar");
+end
+
+rule "Are not similar"
+salience 1
+lock-on-active true
+agenda-group "Traits"
+    when
+        $fm:FriendMatch(similarTraits < 0)
+    then
+        System.out.println("Not similar");
 end
