@@ -12,6 +12,7 @@ lock-on-active true
     then
         MessageFromRule messageFromRule = new MessageFromRule("What is your favourite football team?",2);
         $ms.getMessageSuggests().add(messageFromRule);
+        System.out.println("Message: Both users like football");
 end
 
 rule "A and B like Volleyball"
@@ -23,6 +24,8 @@ lock-on-active true
     then
         MessageFromRule messageFromRule = new MessageFromRule("What is your favourite volleyball team?",2);
         $ms.getMessageSuggests().add(messageFromRule);
+        System.out.println("Message: Both users like volleyball");
+
 end
 
 rule "A and B like Basketball"
@@ -34,6 +37,7 @@ lock-on-active true
     then
         MessageFromRule messageFromRule = new MessageFromRule("What is your favourite basketball team?",2);
         $ms.getMessageSuggests().add(messageFromRule);
+        System.out.println("Message: Both users like basketball");
 end
 
 rule "A like sport"
@@ -44,6 +48,7 @@ lock-on-active true
         $ms: MessageSuggest(userAInterests contains "Football" || userAInterests contains "Basketball" || userAInterests contains "Volleyball")
     then
         $ms.getCategoriesALiked().add("SPORT");
+        System.out.println("User A likes sport");
         update($ms);
 end
 
@@ -55,6 +60,7 @@ lock-on-active true
         $ms:MessageSuggest(userBInterests contains "Football" || userBInterests contains "Basketball" || userBInterests contains "Volleyball")
     then
         $ms.getCategoriesBLiked().add("SPORT");
+        System.out.println("User B likes sport");
         update($ms);
 end
 
@@ -67,6 +73,7 @@ salience(8)
         MessageFromRule messageFromRule = new MessageFromRule("What is your favourite sport?",1);
         $ms.getMessageSuggests().add(messageFromRule);
         $ms.getCommonCategories().add("SPORT");
+        System.out.println("Message: Both users like sport");
         update($ms);
 end
 
@@ -78,6 +85,7 @@ lock-on-active true
         $ms:MessageSuggest(getUserAInterests() contains "FantasyBooks" || getUserAInterests() contains "DramaBooks" || getUserAInterests() contains "PoetryBooks" || getUserAInterests() contains "DetectiveBooks" || getUserAInterests() contains "HistoryBooks")
     then
         $ms.getCategoriesALiked().add("BOOKS");
+        System.out.println("User A likes books");
         update($ms);
 end
 
@@ -89,6 +97,7 @@ lock-on-active true
         $ms:MessageSuggest(getUserBInterests() contains "FantasyBooks" || getUserBInterests() contains "DramaBooks" || getUserBInterests() contains "PoetryBooks" || getUserBInterests() contains "DetectiveBooks" || getUserBInterests() contains "HistoryBooks")
     then
         $ms.getCategoriesBLiked().add("BOOKS");
+        System.out.println("User B likes books");
         update($ms);
 end
 
@@ -101,6 +110,7 @@ agenda-group "Message"
         MessageFromRule messageFromRule = new MessageFromRule("What is your favourite book?",1);
         $ms.getMessageSuggests().add(messageFromRule);
         $ms.getCommonCategories().add("BOOKS");
+        System.out.println("Message: Both users like books");
         update($ms);
 end
 
@@ -112,6 +122,7 @@ lock-on-active true
         $ms: MessageSuggest(userBInterests contains "TV Shows" || userBInterests contains "Movies")
     then
         $ms.getCategoriesALiked().add("TVMOVIE");
+        System.out.println("User A likes tv and movies");
         update($ms);
 end
 
@@ -122,7 +133,8 @@ lock-on-active true
     when
         $ms: MessageSuggest(userBInterests contains "TV Shows" || userBInterests contains "Movies")
     then
-        $ms.getCategoriesBLiked().add("TVMOVIE");;
+        $ms.getCategoriesBLiked().add("TVMOVIE");
+        System.out.println("User B likes tv and movies");
         update($ms);
 end
 
@@ -135,6 +147,7 @@ agenda-group "Message"
         MessageFromRule messageFromRule = new MessageFromRule("What is your favourite thing on tv?",1);
         $ms.getMessageSuggests().add(messageFromRule);
         $ms.getCommonCategories().add("TVMOVIE");
+        System.out.println("Message: Both users like tv and movies");
         update($ms);
 end
 
@@ -146,6 +159,7 @@ agenda-group "Message"
     then
         MessageFromRule messageFromRule = new MessageFromRule("What is your favourite book that is done after movie",3);
         $ms.getMessageSuggests().add(messageFromRule);
+        System.out.println("User A likes Movies and User B likes books");
 end
 
 rule "B like Movies and A like Books"
@@ -156,6 +170,7 @@ agenda-group "Message"
     then
         MessageFromRule messageFromRule = new MessageFromRule("What is your favourite movie that is done after book",3);
         $ms.getMessageSuggests().add(messageFromRule);
+        System.out.println("User B likes Movies and User A likes books");
 end
 
 rule "A likes music"
@@ -166,6 +181,7 @@ lock-on-active true
         $ms:MessageSuggest(getUserAInterests() contains "Hip-hop" || getUserAInterests() contains "Rock" || getUserAInterests() contains "Metal" || getUserAInterests() contains "Pop")
     then
         $ms.getCategoriesALiked().add("MUSIC");
+        System.out.println("User A likes Music");
         update($ms);
 end
 
@@ -177,6 +193,7 @@ lock-on-active true
         $ms:MessageSuggest(getUserBInterests() contains "Hip-hop" || getUserBInterests() contains "Rock" || getUserBInterests() contains "Metal" || getUserBInterests() contains "Pop")
     then
         $ms.getCategoriesBLiked().add("MUSIC");
+        System.out.println("User B likes music");
         update($ms);
 end
 
@@ -189,6 +206,7 @@ agenda-group "Message"
         MessageFromRule messageFromRule = new MessageFromRule("What is your favourite song?",1);
         $ms.getMessageSuggests().add(messageFromRule);
         $ms.getCommonCategories().add("MUSIC");
+        System.out.println("Message: Both users like music");
         update($ms);
 end
 
@@ -200,6 +218,7 @@ agenda-group "Message"
     then
         MessageFromRule messageFromRule = new MessageFromRule("What is your favourite song from a tv show or movie?",3);
         $ms.getMessageSuggests().add(messageFromRule);
+        System.out.println("Message: Both users like music and both like tv");
 end
 
 rule "Select special message"
@@ -215,4 +234,5 @@ agenda-group "Message"
     then
     MessageFromRule messageFromRule = new MessageFromRule("We are the same",10);
     $ms.getMessageSuggests().add(messageFromRule);
+    System.out.println("Special message");
 end

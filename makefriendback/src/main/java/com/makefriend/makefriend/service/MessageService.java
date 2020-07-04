@@ -2,6 +2,7 @@ package com.makefriend.makefriend.service;
 
 import com.makefriend.makefriend.dto.MessageDTO;
 import com.makefriend.makefriend.model.Message;
+import com.makefriend.makefriend.model.MessageFromRule;
 import com.makefriend.makefriend.model.MessageSuggest;
 import com.makefriend.makefriend.model.User;
 import com.makefriend.makefriend.repository.MessageRepository;
@@ -56,6 +57,9 @@ public class MessageService {
         session.getAgenda().getAgendaGroup("Message").setFocus();
         session.fireAllRules();
         session.dispose();
+        for (MessageFromRule m:ms.getMessageSuggests()) {
+            System.out.println(m.getText()+"   " + m.getStrength());
+        }
         return ms;
     }
 

@@ -123,6 +123,7 @@ public class FriendRequestService {
                 break;
             }
             newList.add(suggestions.get(i));
+            System.out.println(suggestions.get(i).getUsername()+"   " + suggestions.get(i).getSimmilar());
         }
         return newList;
     }

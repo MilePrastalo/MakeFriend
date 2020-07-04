@@ -9,6 +9,7 @@ agenda-group "Traits"
         $fm:FriendMatch(getPossitiveATraits() contains "Smoking" && getPossitiveBTraits() contains "Smoking")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        System.out.println("Both users are smoking");
         update($fm)
 end
 
@@ -20,6 +21,8 @@ agenda-group "Traits"
         $fm:FriendMatch(getNegativeATraits() contains "Smoking" && getNegativeBTraits() contains "Smoking")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        System.out.println("Both users are not smoking");
+
         update($fm)
 
 end
@@ -32,6 +35,7 @@ agenda-group "Traits"
         $fm:FriendMatch(getNegativeATraits() contains "Smoking" && getPossitiveBTraits() contains "Smoking")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        System.out.println("User A is not smoking, User B is smoking");
         update($fm)
 
 end
@@ -44,6 +48,7 @@ agenda-group "Traits"
         $fm:FriendMatch(getPossitiveATraits() contains "Smoking" && getNegativeBTraits() contains "Smoking")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        System.out.println("User A is smoking, User B is not smoking");
         update($fm)
 
 end
@@ -56,6 +61,7 @@ agenda-group "Traits"
         $fm:FriendMatch(getPossitiveATraits() contains "Drinks" && getPossitiveBTraits() contains "Drinks")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        System.out.println("Both users are drinking");
         update($fm)
 end
 
@@ -67,6 +73,7 @@ agenda-group "Traits"
         $fm:FriendMatch(getNegativeATraits() contains "Drinks" && getNegativeBTraits() contains "Drinks")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        System.out.println("Both users are not drinking");
         update($fm)
 end
 
@@ -78,6 +85,8 @@ agenda-group "Traits"
         $fm:FriendMatch(getNegativeATraits() contains "Drinks" && getPossitiveBTraits() contains "Drinks")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        System.out.println("User A is not drinking, User B is drinking");
+
         update($fm)
 end
 
@@ -89,6 +98,7 @@ agenda-group "Traits"
         $fm:FriendMatch(getPossitiveATraits() contains "Drinks" && getNegativeBTraits() contains "Drinks")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        System.out.println("User A is drinking, User B is not drinking");
         update($fm)
 end
 
@@ -100,6 +110,7 @@ agenda-group "Traits"
         $fm:FriendMatch(getPossitiveATraits() contains "Active" && getPossitiveBTraits() contains "Active")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        System.out.println("Bot users are active");
         update($fm)
 end
 
@@ -111,6 +122,7 @@ agenda-group "Traits"
         $fm:FriendMatch(getNegativeATraits() contains "Active" && getNegativeBTraits() contains "Active")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        System.out.println("Both users are not active");
         update($fm)
 end
 
@@ -122,6 +134,7 @@ agenda-group "Traits"
         $fm:FriendMatch(getNegativeATraits() contains "Active" && getPossitiveBTraits() contains "Active")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        System.out.println("User a is not active, user B is active");
         update($fm)
 end
 
@@ -133,6 +146,7 @@ agenda-group "Traits"
         $fm:FriendMatch(getPossitiveATraits() contains "Active" && getNegativeBTraits() contains "Active")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        System.out.println("User a is  active, user B is not active");
         update($fm)
 end
 
@@ -144,6 +158,7 @@ agenda-group "Traits"
         $fm:FriendMatch(getPossitiveATraits() contains "University" && getPossitiveBTraits() contains "University")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        System.out.println("Both users went to university");
         update($fm)
 end
 
@@ -155,6 +170,7 @@ agenda-group "Traits"
         $fm:FriendMatch(getNegativeATraits() contains "University" && getNegativeBTraits() contains "University")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()+1);
+        System.out.println("Both users did not went to university");
         update($fm)
 
 end
@@ -167,6 +183,7 @@ agenda-group "Traits"
         $fm:FriendMatch(getNegativeATraits() contains "University" && getPossitiveBTraits() contains "University")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        System.out.println("User a did not went to university, user B went to university");
         update($fm)
 
 end
@@ -179,6 +196,7 @@ agenda-group "Traits"
         $fm:FriendMatch(getPossitiveATraits() contains "University" && getNegativeBTraits() contains "University")
     then
         $fm.setSimilarTraits($fm.getSimilarTraits()-1);
+        System.out.println("User a went to university, user B did not went to university");
         update($fm)
 end
 
@@ -190,7 +208,7 @@ agenda-group "Traits"
         $fm:FriendMatch(similarTraits >= 0)
     then
         kcontext.getKieRuntime().getAgenda().getAgendaGroup("Interests").setFocus();
-        System.out.println("Similar");
+        System.out.println("Users are Similar");
 end
 
 rule "Are not similar"
@@ -200,5 +218,5 @@ agenda-group "Traits"
     when
         $fm:FriendMatch(similarTraits < 0)
     then
-        System.out.println("Not similar");
+        System.out.println("Users are Not similar");
 end

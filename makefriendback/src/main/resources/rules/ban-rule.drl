@@ -2,35 +2,42 @@ import  com.makefriend.makefriend.model.Report;
 import  com.makefriend.makefriend.model.User;
 
 rule "More than 5 reports in 24 hours to one user"
+salience ($t1.executionTime.seconds)
+lock-on-active true
 agenda-group "report"
     when
-        $t1: Report($userReported: reported)
-        $cUsername: User($userReported.username)
+        $t1: Report($userReported: reported && reported.banned == false)
         Number(intValue >= 4) from accumulate(
             $t2: Report(
                 this != $t1,
-                reported.username == $cUsername,
+                (reported.username == $userReported.username),
                 this meets[24h] $t1
             ),
             count($t2)
         )
     then
-        $t1.setBan(true);
+        if(!$t1.getReported().getBanned()){
+            System.out.println("User " + $userReported.getUsername()+" has been banned");
+            $t1.setBan(true);
+            $t1.getReported().setBanned(true);
+            update($t1);
+        }
+
 end
+
 
 rule "More than 5 reports in 24 hours from one user"
 agenda-group "report"
     when
         $t1: Report($userReporting: reportedBy)
-        $cUsername: User($userReporting.username)
         Number(intValue >= 4) from accumulate(
             $t2: Report(
                 this != $t1,
-                reportedBy.username == $cUsername,
+                reportedBy.username == $userReporting.username,
                 this meets[24h] $t1
             ),
             count($t2)
         )
     then
-        System.out.println("Potential abuse of reporting system");
+        System.out.println("Potential abuse of reporting system by " + $userReporting.getUsername());
 end
